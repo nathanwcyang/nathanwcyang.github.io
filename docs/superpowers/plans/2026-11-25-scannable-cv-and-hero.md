@@ -63,7 +63,7 @@
   - `a.btn.btn-outline`: `LinkedIn` → `https://www.linkedin.com/in/nathanwcyang/`, `target="_blank" rel="noopener"`
 
 - [ ] **Step 1: Write failing tests** in `tests/content.test.mjs`, test name `hero`:
-  - `html("/")` includes `>Nathan Yang</h1>`, `Mississauga, Ontario`, `google.com/maps/search/?api=1&amp;query=Mississauga%2C+Ontario`, `>Email me<`, `>LinkedIn<`, `linkedin.com/in/nathanwcyang`
+  - `html("/")` includes `>Nathan Yang</h1>`, `Mississauga, Ontario`, `google.com/maps/search/?api=1&query=Mississauga%2C+Ontario`, `>Email me<`, `>LinkedIn<`, `linkedin.com/in/nathanwcyang`
   - does not include `Hey there`, `👋` or `Let&#39;s connect` / `Let's connect`
 - [ ] **Step 2:** Run `pnpm test`. Expected: `hero` fails.
 - [ ] **Step 3:** Edit the hero in `src/pages/index.astro` as specified.

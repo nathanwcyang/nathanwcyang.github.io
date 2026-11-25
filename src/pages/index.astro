@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
 import { getSortedProjects } from "../lib/projects";
+import { SITE_EMAIL } from "../config";
 
 // Featured projects first, then newest. Add a file in src/content/projects/ and it shows up here.
 const featured_projects = (await getSortedProjects()).slice(0, 3);
@@ -25,11 +26,11 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
       <span aria-hidden="true">|</span>
       <span class="inline-flex items-center gap-1">
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.51l-8 6.22-8-6.22V6h16zM4 18V9.04l7.39 5.75a1 1 0 0 0 1.22 0L20 9.04V18H4z"/></svg>
-        <a class="link link-hover" href="mailto:nwyang@uwaterloo.ca">nwyang@uwaterloo.ca</a>
+        <a class="link link-hover" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
       </span>
     </p>
     <div class="mt-6 flex flex-wrap gap-3">
-      <a class="btn btn-primary" href="mailto:nwyang@uwaterloo.ca">Email me</a>
+      <a class="btn btn-primary" href={`mailto:${SITE_EMAIL}`}>Email me</a>
       <a class="btn btn-outline" href="https://www.linkedin.com/in/nathanwcyang/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>

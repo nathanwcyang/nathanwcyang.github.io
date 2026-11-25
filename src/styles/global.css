@@ -38,6 +38,9 @@ strong, b {
 .type-subheading {
   @apply font-sans font-semibold text-base leading-snug;
 }
+.type-label {
+  @apply font-sans font-semibold text-xs uppercase tracking-wider text-base-content/70;
+}
 .type-meta {
   @apply font-sans text-sm text-base-content/70;
 }

@@ -20,7 +20,8 @@ Titles stand out by **size and weight only**. Use these classes (defined in `src
 | `type-heading` | Card titles, write-up `h2` ("The problem") | 700 | 20px |
 | `type-subheading` | CV job titles, write-up `h3` | 600 | 16px |
 | Body text | Paragraphs, bullets | 400 | 16px, relaxed line height |
-| `type-meta` | Dates, captions | 400 | 14px, 70% opacity |
+| `type-meta` | Dates, captions, CV detail lines | 400 | 14px, 70% opacity |
+| `type-label` | Small section labels ("Key achievements") | 600, uppercase, wide spacing | 12px, 70% opacity |
 | Menu, buttons | Navigation | daisyUI default | daisyUI default |
 
 ## Weights and italics
