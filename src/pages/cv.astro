@@ -3,16 +3,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
 ---
 
-<BaseLayout title="Resume" sideBarActiveItemID="cv">
+<BaseLayout title="CV" sideBarActiveItemID="cv">
   <div class="mb-5">
     <div class="text-3xl w-full font-bold">Profile</div>
   </div>
 
-  <div class="mb-10 text-justify">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <div class="mb-10">
+    Third-year Doctor of Pharmacy student at the University of Waterloo (Rx 2027), with co-op experience in specialty,
+    community and hospital pharmacy. I look for friction in pharmacy workflows and build tools to remove it.
   </div>
 
   <div class="mb-5">
@@ -20,13 +18,10 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <div class="time-line-container grid gap-4 mb-10">
+    <TimeLineElement title="Doctor of Pharmacy Candidate (PharmD)" subtitle="2024 to 2027 at the University of Waterloo" />
     <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
-    />
-    <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
+      title="Bachelor of Health Sciences, Specialization in Health Sciences"
+      subtitle="2018 to 2022 at Western University"
     />
   </div>
 
@@ -36,22 +31,86 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 
   <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
+      title="Co-op Pharmacy Student at Express Scripts Canada Pharmacy"
+      subtitle="May to August 2026"
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      <ul class="list-disc ml-5 space-y-1">
+        <li>
+          Identified a bottleneck in counselling prep for new specialty prescriptions and independently designed
+          <a href="/projects/rxcounsel" class="font-semibold underline">RxCounsel</a>, an AI clinical counselling software tool
+          <ul class="list-[circle] ml-5 space-y-1 mt-1">
+            <li>
+              Generates drug-specific counselling guides covering key messages, dosing and renal/hepatic
+              considerations, tailored to each patient's current medications and demographics
+            </li>
+            <li>Rebuilt as a Copilot agent citing Canadian clinical guidelines, as the pharmacy required</li>
+            <li>Partnered with a pharmacist lead who set priorities and reviewed each version</li>
+            <li>Piloted with 3 pharmacists, saving about 8 minutes of prep time per counselling session</li>
+          </ul>
+        </li>
+        <li>
+          Provided telephonic patient counselling on specialty pharmaceuticals including GLP-1/GIP receptor agonists,
+          CGRP monoclonal antibodies, antiepileptics and injectable biologics, covering mechanism of action,
+          administration technique, storage requirements and adverse effect management
+        </li>
+        <li>Processed and verified cold-chain prescriptions per manufacturer temperature and handling protocols</li>
+      </ul>
     </TimeLineElement>
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
+      title="Co-op Pharmacy Student at Rexall Pharmacy Store #1321"
+      subtitle="September to December 2025"
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      <ul class="list-disc ml-5 space-y-1">
+        <li>Led a two-month vaccination clinic, administering over 500 COVID-19 and influenza vaccinations to the public</li>
+        <li>Counselled patients on key drug monograph information for new and refill prescriptions</li>
+        <li>
+          Summarized key differences between major over-the-counter (OTC) categories (e.g., cold/flu, allergy, GI, pain
+          relief, dermatology) to support efficient patient counselling and pharmacist decision-making
+        </li>
+        <li>
+          Adjudicated prescription claims through insurance plans and coordinated the InnoviCares copay assistance card
+          to minimize patient out-of-pocket costs
+        </li>
+      </ul>
     </TimeLineElement>
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
+      title="Co-op Pharmacy Student at Trillium Health Partners, Credit Valley Hospital"
+      subtitle="January to April 2025"
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      <ul class="list-disc ml-5 space-y-1">
+        <li>
+          Completed a comparative analysis between Trillium Health Partners Pharmacy's hazardous medication list and the
+          Safe Pharmaceutical Handling Evaluation Collaborative (SaPHE) list used by Sunnybrook, Mount Sinai, UHN, Unity
+          Health and North York General Hospital
+          <ul class="list-[circle] ml-5 space-y-1 mt-1">
+            <li>Summarized differences in drugs, rationales and criteria between the two lists</li>
+            <li>Delivered the results in an organized Excel spreadsheet</li>
+          </ul>
+        </li>
+        <li>
+          Assisted in distributing unit-dose and ward-stock medications throughout the hospital to Pyxis automated
+          dispensing cabinets, following hospital policies and provincial standards
+        </li>
+        <li>Maintained accurate inventory records and monitored daily for expiring or recalled medications</li>
+        <li>
+          Compounded and prepackaged narcotics, oral suspensions and PRN doses, following NAPRA aseptic techniques
+        </li>
+      </ul>
+    </TimeLineElement>
+    <TimeLineElement title="Collections Specialist at CareRx Pharmacy" subtitle="May to September 2022">
+      <ul class="list-disc ml-5 space-y-1">
+        <li>
+          Led the collections team to recover 120+ day overdue payments following the acquisition of Medical Pharmacies
+          Group Ltd.
+          <ul class="list-[circle] ml-5 space-y-1 mt-1">
+            <li>Collected over $150,000 within the first month on the job</li>
+          </ul>
+        </li>
+        <li>Liaised with clients and Directors of Care in long-term care and retirement homes across the GTA</li>
+        <li>
+          Worked with regional directors, accounts receivable and customer care leads to meet payment deadlines
+        </li>
+      </ul>
     </TimeLineElement>
   </div>
 
@@ -60,33 +119,19 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <ul class="list-disc mx-6 mb-10 grid gap-2">
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
+    <li>Injection certified (2025)</li>
+    <li>Standard First Aid, CPR and AED Level C (2024 to 2027)</li>
   </ul>
 
   <div class="mb-5">
     <div class="text-3xl w-full font-bold">Skills</div>
   </div>
 
-  <ul class="list-disc md:columns-5 columns-2 mx-6">
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
+  <ul class="list-disc mx-6 grid gap-2">
+    <li><span class="font-semibold">Pharmacy software:</span> Propel, Kroll, Lexi-Drug, Microsoft Office</li>
+    <li>
+      <span class="font-semibold">Technical &amp; creative:</span> Claude and Copilot agents, React/Tailwind, DaVinci
+      Resolve, audio mixing, photography
+    </li>
   </ul>
 </BaseLayout>
