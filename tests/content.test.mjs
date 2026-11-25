@@ -25,3 +25,21 @@ test("hero", () => {
   ]) assert.ok(h.includes(s), `missing: ${s}`);
   for (const s of ["Hey there", "👋", "Let&#39;s connect", "Let's connect"]) assert.ok(!h.includes(s), `still has: ${s}`);
 });
+
+test("cv", () => {
+  const h = html("/cv");
+  for (const s of [
+    "Pharmacy Student; Workflow Development",
+    "Express Scripts Canada Pharmacy | Co-op | Mississauga, ON | May–August 2026",
+    "Rexall Pharmacy #1321 | Co-op | Mississauga, ON | September–December 2025",
+    "Trillium Health Partners, Credit Valley Hospital | Co-op | Mississauga, ON | January–April 2025",
+    "CareRx Pharmacy | Full-time | Oakville, ON | May–September 2022",
+    "Key achievements",
+    "1–1.5 hours a day per pharmacist",
+    "lead medication management pharmacist",
+    "Collected over $150,000 in the first month.",
+  ]) assert.ok(h.includes(s), `missing: ${s}`);
+  for (const s of ["Co-op Pharmacy Student", "Partnered with a pharmacist lead", "Rebuilt as a Copilot agent"])
+    assert.ok(!h.includes(s), `still has: ${s}`);
+  assert.equal((h.match(/<h3/g) || []).length, 6, "expected 2 education + 4 job titles as h3");
+});
