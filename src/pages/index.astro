@@ -10,8 +10,8 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
 <BaseLayout sideBarActiveItemID="home">
   <div class="pb-12 mt-5">
     <div class="text-xl py-1">Hey there 👋</div>
-    <div class="text-5xl font-bold">I'm Nathan</div>
-    <div class="text-3xl py-3 font-bold">University of Waterloo PharmD Student, Rx 2027</div>
+    <h1 class="type-display">I'm Nathan</h1>
+    <p class="type-lede pt-3 pb-1">Doctor of Pharmacy Student, University of Waterloo · Class of 2027</p>
     <div class="py-2">
       <p class="text-lg">
         I have co-op experience in specialty, community and hospital pharmacy. I like finding the slow parts of a
@@ -24,7 +24,7 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
   </div>
 
   <div>
-    <div class="text-3xl w-full font-bold mb-2">Featured Projects</div>
+    <div class="type-title w-full mb-2">Featured Projects</div>
   </div>
 
   {
