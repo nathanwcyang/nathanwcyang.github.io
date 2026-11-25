@@ -21,7 +21,9 @@ On my own time, I designed RxCounsel, an AI tool that prepares a drug-specific c
 
 ## How it evolved
 
-The pharmacy needed every recommendation tied to a referenced source. I rebuilt RxCounsel as a Copilot agent that cites Canadian clinical guidelines.
+I worked with a pharmacist who acted as an informal project lead. They set priorities, tested each version and told me what to build next.
+
+The pharmacy also needed every recommendation tied to a referenced source. I rebuilt RxCounsel as a Copilot agent that cites Canadian clinical guidelines.
 
 ## Result
 
