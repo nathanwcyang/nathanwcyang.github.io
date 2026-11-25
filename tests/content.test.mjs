@@ -12,3 +12,16 @@ export function html(path) {
 test("smoke", () => {
   assert.ok(html("/").includes("<h1"));
 });
+
+test("hero", () => {
+  const h = html("/");
+  for (const s of [
+    ">Nathan Yang</h1>",
+    "Mississauga, Ontario",
+    "google.com/maps/search/?api=1&query=Mississauga%2C+Ontario",
+    ">Email me<",
+    ">LinkedIn<",
+    "linkedin.com/in/nathanwcyang",
+  ]) assert.ok(h.includes(s), `missing: ${s}`);
+  for (const s of ["Hey there", "👋", "Let&#39;s connect", "Let's connect"]) assert.ok(!h.includes(s), `still has: ${s}`);
+});
