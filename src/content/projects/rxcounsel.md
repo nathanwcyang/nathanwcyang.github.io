@@ -1,6 +1,6 @@
 ---
 title: "RxCounsel"
-description: "An AI counselling-prep tool I designed on my own initiative during my Express Scripts co-op. Piloted with 3 pharmacists, it saved about 8 minutes of prep time per counselling session."
+description: "An AI counselling-prep tool I built on my own initiative during my Express Scripts co-op. Piloted with 3 pharmacists, it saved roughly 1–1.5 hours a day per pharmacist."
 category: "pharmacy"
 date: 2026-08-31
 featured: true
@@ -27,4 +27,4 @@ The pharmacy also needed every recommendation tied to a referenced source. I reb
 
 ## Result
 
-Three pharmacists tested RxCounsel in a pilot. It saved about 8 minutes of prep time per counselling session.
+Three pharmacists tested RxCounsel in a pilot. Each handles about 7–12 complex counselling sessions a day, and the tool saved about 8 minutes on each: roughly 1–1.5 hours a day per pharmacist.
