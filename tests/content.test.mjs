@@ -43,3 +43,8 @@ test("cv", () => {
     assert.ok(!h.includes(s), `still has: ${s}`);
   assert.equal((h.match(/<h3/g) || []).length, 6, "expected 2 education + 4 job titles as h3");
 });
+
+test("rxcounsel", () => {
+  assert.ok(html("/projects/rxcounsel").includes("7–12 complex counselling sessions"), "missing: sessions range on project page");
+  assert.ok(html("/").includes("roughly 1–1.5 hours a day per pharmacist"), "missing: time saved on home card");
+});
