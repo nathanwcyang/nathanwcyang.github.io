@@ -29,4 +29,4 @@ Never put Nathan's phone number or home address on the site.
 
 ## Design
 
-Fonts, text styles and colours follow `docs/design/typography.md`. Use the `type-*` classes and theme colour names (`text-primary`, `bg-base-200`); never hard-code fonts, sizes or hex colours on a page.
+The site uses one font (Atkinson Hyperlegible Next). Fonts, text styles and colours follow `docs/design/typography.md`. Use the `type-*` classes and theme colour names (`text-primary`, `bg-base-200`); never hard-code fonts, sizes or hex colours on a page.
