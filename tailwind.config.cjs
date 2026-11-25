@@ -1,13 +1,24 @@
 /** @type {import('tailwindcss').Config} */
+const themes = require("./src/styles/themes.cjs");
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: {
-		extend: {},
-	},
-	plugins: [require("@tailwindcss/typography"),require("daisyui")],
-	daisyui: {
-		themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-		darkTheme: "dark", // name of one of the included themes for dark mode
-		logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
-	  }
-}
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        // Body text and everything you read: Atkinson Hyperlegible Next
+        sans: ['"Atkinson Hyperlegible Next Variable"', ...defaultTheme.fontFamily.sans],
+        // Big titles only: Newsreader (see docs/design/typography.md)
+        serif: ['"Newsreader Variable"', "Georgia", ...defaultTheme.fontFamily.serif],
+      },
+    },
+  },
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  daisyui: {
+    // Each theme in src/styles/themes.cjs becomes a data-theme name.
+    themes: Object.entries(themes).map(([name, colors]) => ({ [name]: colors })),
+    darkTheme: "flexoki-dark",
+    logs: false,
+  },
+};

@@ -26,3 +26,7 @@ Never put Nathan's phone number or home address on the site.
 
 - Projects live in `src/content/projects/*.md`. `category` is `pharmacy` or `creative`. `featured: true` pins a project to the top of the home page. The home page shows the first 3 (featured first, then newest).
 - The blog is hidden from the menu until the first real post. Re-add the Blog link in `src/components/SideBarMenu.astro` when publishing one.
+
+## Design
+
+Fonts, text styles and colours follow `docs/design/typography.md`. Use the `type-*` classes and theme colour names (`text-primary`, `bg-base-200`); never hard-code fonts, sizes or hex colours on a page.

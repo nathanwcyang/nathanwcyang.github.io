@@ -1,3 +1,50 @@
+/* Type spec: see docs/design/typography.md */
+
+html {
+  @apply font-sans antialiased;
+  font-optical-sizing: auto;
+}
+body {
+  @apply leading-relaxed;
+}
+strong, b {
+  @apply font-bold;
+}
+
+/* Write-up pages: use theme colours instead of the typography plugin's greys */
+.prose {
+  --tw-prose-body: var(--fallback-bc, oklch(var(--bc) / 0.9));
+  --tw-prose-headings: var(--fallback-bc, oklch(var(--bc) / 1));
+  --tw-prose-bold: var(--fallback-bc, oklch(var(--bc) / 1));
+  --tw-prose-bullets: var(--fallback-bc, oklch(var(--bc) / 0.5));
+  --tw-prose-hr: var(--fallback-b3, oklch(var(--b3) / 1));
+  --tw-prose-quotes: var(--fallback-bc, oklch(var(--bc) / 1));
+  --tw-prose-quote-borders: var(--fallback-p, oklch(var(--p) / 1));
+  --tw-prose-links: var(--fallback-p, oklch(var(--p) / 1));
+}
+
+/* Serif (Newsreader): big, short titles that mark where you are */
+.type-display {
+  @apply font-serif font-semibold tracking-tight text-4xl md:text-5xl leading-[1.1];
+}
+.type-title {
+  @apply font-serif font-semibold text-2xl md:text-3xl leading-tight;
+}
+
+/* Sans (Atkinson): everything you read for facts */
+.type-lede {
+  @apply font-sans font-medium text-lg md:text-xl leading-snug;
+}
+.type-heading {
+  @apply font-sans font-bold text-xl leading-snug;
+}
+.type-subheading {
+  @apply font-sans font-semibold text-base leading-snug;
+}
+.type-meta {
+  @apply font-sans text-sm text-base-content/70;
+}
+
 .time-line-container>div:last-child .education__time>.education__line {
     display: none;
 }
