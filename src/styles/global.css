@@ -2,7 +2,6 @@
 
 html {
   @apply font-sans antialiased;
-  font-optical-sizing: auto;
 }
 body {
   @apply leading-relaxed;
@@ -23,15 +22,13 @@ strong, b {
   --tw-prose-links: var(--fallback-p, oklch(var(--p) / 1));
 }
 
-/* Serif (Newsreader): big, short titles that mark where you are */
+/* One font (Atkinson). Titles stand out by size and weight only. */
 .type-display {
-  @apply font-serif font-semibold tracking-tight text-4xl md:text-5xl leading-[1.1];
+  @apply font-bold tracking-tight text-4xl md:text-5xl leading-[1.1];
 }
 .type-title {
-  @apply font-serif font-semibold text-2xl md:text-3xl leading-tight;
+  @apply font-bold tracking-tight text-2xl md:text-3xl leading-tight;
 }
-
-/* Sans (Atkinson): everything you read for facts */
 .type-lede {
   @apply font-sans font-medium text-lg md:text-xl leading-snug;
 }
@@ -47,4 +44,14 @@ strong, b {
 
 .time-line-container>div:last-child .education__time>.education__line {
     display: none;
+}
+
+/* Accessibility: a clear focus ring for keyboard users (Flexoki blue) */
+:focus-visible {
+  outline: 2px solid var(--fallback-p, oklch(var(--p) / 1));
+  outline-offset: 2px;
+}
+.drawer-toggle:focus-visible ~ .drawer-content .menu-toggle {
+  outline: 2px solid var(--fallback-p, oklch(var(--p) / 1));
+  outline-offset: 2px;
 }

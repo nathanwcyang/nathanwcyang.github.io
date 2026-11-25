@@ -11,12 +11,13 @@ const sections = [
 ---
 
 <BaseLayout title="Projects" sideBarActiveItemID="projects">
+  <h1 class="sr-only">Projects</h1>
   {
     sections.map((section, i) => {
       const items = projects.filter((p) => p.data.category === section.category);
       return (
         <>
-          <div class={`type-title w-full mb-5 ${i > 0 ? "mt-10" : ""}`}>{section.heading}</div>
+          <h2 class={`type-title w-full mb-5 ${i > 0 ? "mt-10" : ""}`}>{section.heading}</h2>
           {items.length === 0 && <p class="opacity-75">{section.empty}</p>}
           {items.map((project) => (
             <>

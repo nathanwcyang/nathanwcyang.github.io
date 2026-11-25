@@ -1,38 +1,33 @@
 # Typography and colour spec
 
-## Fonts
+## Font
 
-| **Role** | **Font** | **Why** |
-|---|---|---|
-| Titles (serif) | Newsreader (variable, optical sizes) | Calm and credible. Marks where a section starts. |
-| Everything else (sans) | Atkinson Hyperlegible Next (variable) | Built for legibility. Carries everything you read for facts. |
+**One font for the whole site: Atkinson Hyperlegible Next** (variable, weights 200–800). It was built by the Braille Institute for legibility: I, l and 1 look different, and so do 0 and O. Zeros have a slash on purpose.
 
-Both are self-hosted through Fontsource (SIL Open Font License), so no requests go to Google. Only the Latin letters are downloaded.
+It's self-hosted through Fontsource (SIL Open Font License), so no requests go to Google. Only the Latin letters are downloaded.
 
-**Rule:** the serif is for short titles you read once to find your place. If someone reads it to learn something, it's Atkinson.
+Decided against: a serif for titles (two fonts felt busy), Geist ("AI" reads as "Al"), Lexend (too wide, more wrapping on phones).
 
 ## Text styles
 
-Use these classes (defined in `src/styles/global.css`) instead of setting fonts, sizes and weights by hand.
+Titles stand out by **size and weight only**. Use these classes (defined in `src/styles/global.css`) instead of setting sizes and weights by hand.
 
-| **Class** | **Used for** | **Font** | **Weight** | **Size (phone → desktop)** |
-|---|---|---|---|---|
-| `type-display` | Home hero ("I'm Nathan") | Newsreader | 600 | 36 → 48px |
-| `type-title` | Section titles ("Experience", "Featured Projects") | Newsreader | 600 | 24 → 30px |
-| Project/post page title (`h1`) | The one title at the top of a write-up | Newsreader | 600 | 36px |
-| `type-lede` | Hero subtitle | Atkinson | 500 | 18 → 20px |
-| `type-heading` | Card titles, write-up `h2` ("The problem") | Atkinson | 700 | 20px |
-| `type-subheading` | CV job titles, write-up `h3` | Atkinson | 600 | 16px |
-| Body text | Paragraphs, bullets | Atkinson | 400 | 16px, relaxed line height |
-| `type-meta` | Dates, captions | Atkinson | 400 | 14px, 70% opacity |
-| Menu, buttons | Navigation | Atkinson | daisyUI default | daisyUI default |
+| **Class** | **Used for** | **Weight** | **Size (phone → desktop)** |
+|---|---|---|---|
+| `type-display` | Home hero ("I'm Nathan"), project/post page titles | 700, tight spacing | 36 → 48px |
+| `type-title` | Section titles ("Experience", "Featured Projects") | 700, tight spacing | 24 → 30px |
+| `type-lede` | Hero subtitle | 500 | 18 → 20px |
+| `type-heading` | Card titles, write-up `h2` ("The problem") | 700 | 20px |
+| `type-subheading` | CV job titles, write-up `h3` | 600 | 16px |
+| Body text | Paragraphs, bullets | 400 | 16px, relaxed line height |
+| `type-meta` | Dates, captions | 400 | 14px, 70% opacity |
+| Menu, buttons | Navigation | daisyUI default | daisyUI default |
 
 ## Weights and italics
 
-- **Newsreader:** always 600 (semibold). Never 700; bold serif looks heavy next to Atkinson.
-- **Atkinson:** 400 body, 500 lede, 600 subheadings and labels, 700 headings and `<strong>`.
-- **Italic:** Atkinson italic for emphasis inside body text. Newsreader italic only for pull quotes (`>` blockquotes in write-ups). No italic titles.
-- **Never:** serif on long lines (job titles, card titles, subtitles), serif below 24px, or a third font.
+- **400** body, **500** lede, **600** subheadings and labels, **700** titles, headings and `<strong>`.
+- **Italic** only for emphasis inside body text and for pull quotes (`>` blockquotes) in write-ups. No italic titles.
+- **Never:** a second font, or weights below 400 for text people need to read.
 
 ## Colour
 

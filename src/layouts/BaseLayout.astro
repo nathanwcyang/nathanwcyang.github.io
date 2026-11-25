@@ -18,14 +18,14 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme={SITE_THEME}>
+<html lang="en-CA" data-theme={SITE_THEME}>
   <head>
     <BaseHead title={title} description={description} image={image} , ogType={ogType} />
     {TRANSITION_API && <ViewTransitions />}
   </head>
   <body>
     <div class="bg-base-100 drawer lg:drawer-open">
-      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+      <input id="my-drawer" type="checkbox" class="drawer-toggle" aria-label="Open menu" />
       <div class="drawer-content bg-base-100">
         <Header title={SITE_TITLE} />
         <div class="md:flex md:justify-center">
@@ -37,5 +37,36 @@ const {
       </div>
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
     </div>
+    <script>
+      // Mobile menu: hide the closed menu from keyboard and screen readers, and close it with Escape.
+      function setupMenu() {
+        const toggle = document.getElementById("my-drawer") as HTMLInputElement | null;
+        const menu = document.getElementById("site-menu");
+        if (!toggle || !menu) return;
+        toggle.setAttribute("aria-controls", "site-menu");
+        const wide = window.matchMedia("(min-width: 1024px)");
+        const sync = () => {
+          const hidden = !wide.matches && !toggle.checked;
+          menu.toggleAttribute("inert", hidden);
+          toggle.setAttribute("aria-label", toggle.checked ? "Close menu" : "Open menu");
+        };
+        toggle.addEventListener("change", () => {
+          sync();
+          // When the menu opens, move keyboard focus to its first link
+          if (toggle.checked && !wide.matches) menu.querySelector("a")?.focus();
+        });
+        wide.addEventListener("change", sync);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && toggle.checked) {
+            toggle.checked = false;
+            sync();
+            toggle.focus();
+          }
+        });
+        sync();
+      }
+      setupMenu();
+      document.addEventListener("astro:after-swap", setupMenu);
+    </script>
   </body>
 </html>

@@ -4,15 +4,15 @@ import SideBarMenu from "./SideBarMenu.astro";
 const { sideBarActiveItemID } = Astro.props;
 ---
 
-<div class="drawer-side z-40">
+<div class="drawer-side z-40" id="site-menu">
   <label for="my-drawer" class="drawer-overlay"></label>
   <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href="/">
-        <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
+        <div class="avatar motion-safe:transition motion-safe:ease-in-out motion-safe:hover:scale-[102%] block m-auto">
           <div class="w-[8.5rem]">
             <!-- Photo placeholder: same size and position as the template photo -->
-            <img src="/avatar-ny.svg" width="136" height="136" class="w-[8.5rem] h-[8.5rem]" alt="NY" />
+            <img src="/avatar-ny.svg" width="136" height="136" class="w-[8.5rem] h-[8.5rem]" alt="Nathan Yang, home" />
           </div>
         </div>
       </a>

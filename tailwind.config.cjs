@@ -7,10 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // Body text and everything you read: Atkinson Hyperlegible Next
+        // One font for the whole site: Atkinson Hyperlegible Next (see docs/design/typography.md)
         sans: ['"Atkinson Hyperlegible Next Variable"', ...defaultTheme.fontFamily.sans],
-        // Big titles only: Newsreader (see docs/design/typography.md)
-        serif: ['"Newsreader Variable"', "Georgia", ...defaultTheme.fontFamily.serif],
       },
     },
   },
