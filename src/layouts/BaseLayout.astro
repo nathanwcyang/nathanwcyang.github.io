@@ -50,6 +50,15 @@ const {
           menu.toggleAttribute("inert", hidden);
           toggle.setAttribute("aria-label", toggle.checked ? "Close menu" : "Open menu");
         };
+        // Phone menu: close it when a link is tapped, so the page scrolls into view
+        menu.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => {
+            if (!wide.matches && toggle.checked) {
+              toggle.checked = false;
+              sync();
+            }
+          })
+        );
         toggle.addEventListener("change", () => {
           sync();
           // When the menu opens, move keyboard focus to its first link

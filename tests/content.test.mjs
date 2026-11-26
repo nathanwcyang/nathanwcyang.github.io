@@ -105,3 +105,13 @@ test("contact page", () => {
     assert.ok(h.includes(s), `missing: ${s}`);
   assert.ok(!h.includes("google.com/maps"), "Maps link on contact page");
 });
+
+test("no duplicate ids", () => {
+  for (const page of ["/", "/projects", "/projects/rxcounsel", "/contact"]) {
+    let h;
+    try { h = html(page); } catch { continue; }
+    const ids = [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+    const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
+    assert.deepEqual(dupes, [], `${page}: duplicate ids ${dupes.join(", ")}`);
+  }
+});
