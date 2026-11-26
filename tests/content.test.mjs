@@ -159,7 +159,7 @@ test("project cards show the screenshot", () => {
     assert.ok(start > -1, `${page}: no RxCounsel card link`);
     const card = h.slice(start, h.indexOf("</a>", start));
     assert.match(card, /<img[^>]*src="\/_astro\/rxcounsel-input-screen[^"]*\.webp"/, `${page}: card has no screenshot`);
-    assert.match(card, /<img[^>]*alt=""/, `${page}: card image should be decorative (alt="")`);
+    assert.match(card, /<img[^>]*\salt(="")?[\s>]/, `${page}: card image should be decorative (alt="")`);
     assert.ok(card.includes(">RxCounsel<"), `${page}: card title missing`);
   }
 });
