@@ -1,4 +1,5 @@
 import { z, defineCollection, type SchemaContext } from "astro:content";
+import { glob } from "astro/loaders";
 type ImageFn = SchemaContext["image"];
 const projectSchema = ({ image }: { image: ImageFn }) => z.object({
     title: z.string(),
@@ -20,7 +21,10 @@ const projectSchema = ({ image }: { image: ImageFn }) => z.object({
 
 export type ProjectSchema = z.infer<ReturnType<typeof projectSchema>>;
 
-const projectCollection = defineCollection({ schema: projectSchema });
+const projectCollection = defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+    schema: projectSchema,
+});
 
 export const collections = {
     'projects': projectCollection,

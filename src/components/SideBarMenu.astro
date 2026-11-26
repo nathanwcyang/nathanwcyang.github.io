@@ -4,29 +4,38 @@ const { sideBarActiveItemID } = Astro.props;
 ---
 
 <!-- Links live in NavMenu.tsx; the bouncing dot marks the current one -->
-<NavMenu client:load active={sideBarActiveItemID} className="grow shrink overflow-y-auto p-2 pl-6" />
+<div data-nav-active={sideBarActiveItemID} class="contents">
+  <NavMenu client:load active={sideBarActiveItemID} className="grow shrink overflow-y-auto p-2 pl-6" />
+</div>
 
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID }}>
-// This inline script re-runs after every page change (Astro view transitions),
+<script>
+// Runs on first load and after every view-transition navigation (astro:page-load),
 // so it must not add listeners that pile up. One scroll listener at a time.
+declare global {
+  interface Window {
+    __navScrollAbort?: AbortController;
+    __navActive?: string;
+  }
+}
+
 function setupMenuHighlight() {
   window.__navScrollAbort?.abort();
   // Tell NavMenu.tsx which link is current; it may hydrate before or after this runs.
-  const highlight = (id) => {
+  const highlight = (id: string) => {
     window.__navActive = id;
     window.dispatchEvent(new CustomEvent("nav:active", { detail: id }));
   };
 
   // Other pages: highlight the page's own link.
-  if (!document.getElementById("projects")) {
-    highlight(sideBarActiveItemID);
+  if (!document.querySelector("[data-home]")) {
+    highlight(document.querySelector<HTMLElement>("[data-nav-active]")?.dataset.navActive ?? "");
     return;
   }
 
   // Home page: highlight the link for the section in view.
   // The intro has no id on purpose: /#top then scrolls to the very top of the page.
-  const linkFor = { projects: "projects", experience: "cv", education: "cv", certifications: "cv", skills: "cv" };
-  const sections = Object.keys(linkFor).map((id) => document.getElementById(id)).filter(Boolean);
+  const linkFor: Record<string, string> = { projects: "projects", experience: "cv", education: "cv", certifications: "cv", skills: "cv" };
+  const sections = Object.keys(linkFor).map((id) => document.getElementById(id)).filter((s): s is HTMLElement => !!s);
   // The active section is the last one whose top has scrolled past a line just below the
   // top of the screen (past the sticky phone header). At the very bottom, CV wins.
   const LINE = 120;
@@ -41,5 +50,5 @@ function setupMenuHighlight() {
   window.addEventListener("scroll", update, { passive: true, signal: controller.signal });
   update();
 }
-setupMenuHighlight();
+document.addEventListener("astro:page-load", setupMenuHighlight);
 </script>
