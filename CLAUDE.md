@@ -16,7 +16,7 @@ Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/age
 
 ## Private files and the WordPress theme
 
-This repo is public. Nathan's private files (his CV, the purchased "Hub" WordPress theme, tldraw scratchpads, screenshots) live in a separate folder outside this repo. Never copy them in.
+This repo is public. Nathan's private files (his CV, the purchased "Hub" WordPress theme, tldraw scratchpads, screenshots) live in a separate folder outside this repo. Never copy them in. The one exception: a screenshot Nathan approves for the site goes in `src/assets/projects/<slug>/` (see Content below). Check it first for patient data, a phone number or a home address.
 
 The Hub theme is **reference only**. Its CSS, images, fonts and design are under a ThemeForest purchase license. When Nathan asks to rebuild a theme component, look at it (or a screenshot of it) and write a new version from scratch in Astro + Tailwind. Never paste the theme's code, images, icons or fonts into this repo.
 
