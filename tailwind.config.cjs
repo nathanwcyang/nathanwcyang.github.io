@@ -28,7 +28,6 @@ module.exports = {
   daisyui: {
     // Each theme in src/styles/themes.cjs becomes a data-theme name.
     themes: Object.entries(themes).map(([name, colors]) => ({ [name]: colors })),
-    darkTheme: "flexoki-dark",
     logs: false,
   },
 };

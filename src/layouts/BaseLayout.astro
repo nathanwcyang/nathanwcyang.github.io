@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
 import { ViewTransitions } from "astro:transitions";
 
-import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API, SITE_THEME } from "../config";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_THEME } from "../config";
 
 const {
   image,
@@ -20,8 +20,8 @@ const {
 <!doctype html>
 <html lang="en-CA" data-theme={SITE_THEME}>
   <head>
-    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
-    {TRANSITION_API && <ViewTransitions />}
+    <BaseHead title={title} description={description} image={image} ogType={ogType} />
+    <ViewTransitions />
   </head>
   <body>
     <div class="bg-base-100 drawer lg:drawer-open">
