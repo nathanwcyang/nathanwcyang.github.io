@@ -43,6 +43,7 @@ const flexoki = {
   yellow600: "#AD8301",
   red400: "#D14D41",
   red600: "#AF3029",
+  orange600: "#BC5215",
 };
 
 module.exports = {
@@ -64,6 +65,9 @@ module.exports = {
     success: flexoki.green600,
     warning: flexoki.yellow600,
     error: flexoki.red600,
+    // Sidebar menu: the bouncing dot and the not-current links
+    "--nav-dot": flexoki.orange600,
+    "--nav-muted": flexoki.base600,
     ...shape,
   },
   "flexoki-dark": {

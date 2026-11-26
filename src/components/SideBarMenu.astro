@@ -1,23 +1,21 @@
 ---
+import NavMenu from "./NavMenu";
 const { sideBarActiveItemID } = Astro.props;
-const activeClass = "bg-base-300"; // For primary color replace with `active` class
 ---
 
-<ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="nav-home" href="/#top">Home</a></li>
-    <li><a class="py-3 text-base" id="nav-projects" href="/#projects">Projects</a></li>
-    <li><a class="py-3 text-base" id="nav-cv" href="/#experience">CV</a></li>
-    <li><a class="py-3 text-base" id="nav-contact" href="/contact">Contact</a></li>
-</ul>
+<!-- Links live in NavMenu.tsx; the bouncing dot marks the current one -->
+<NavMenu client:load active={sideBarActiveItemID} className="grow shrink overflow-y-auto p-2 pl-6" />
 
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
+<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID }}>
 // This inline script re-runs after every page change (Astro view transitions),
 // so it must not add listeners that pile up. One scroll listener at a time.
 function setupMenuHighlight() {
   window.__navScrollAbort?.abort();
-  // Sidebar link ids are "nav-" + name, so they never clash with section ids on the page.
-  const links = ["home", "projects", "cv", "contact"].map((id) => document.getElementById(`nav-${id}`)).filter(Boolean);
-  const highlight = (id) => links.forEach((a) => a.classList.toggle(activeClass, a.id === `nav-${id}`));
+  // Tell NavMenu.tsx which link is current; it may hydrate before or after this runs.
+  const highlight = (id) => {
+    window.__navActive = id;
+    window.dispatchEvent(new CustomEvent("nav:active", { detail: id }));
+  };
 
   // Other pages: highlight the page's own link.
   if (!document.getElementById("projects")) {
