@@ -4,6 +4,9 @@ description: "An AI counselling-prep tool I built on my own initiative during my
 category: "pharmacy"
 date: 2026-08-31
 featured: true
+heroImage: "../../assets/projects/rxcounsel/rxcounsel-input-screen.png"
+heroAlt: "RxCounsel's input form, with fields for age, sex, renal and hepatic impairment, current medications, medical conditions and an input modifier, a New drug(s) section for drug name, dose and sig, and a Generate button."
+heroCaption: "RxCounsel's input screen: the pharmacist enters patient details and the new drug, then clicks Generate."
 ---
 
 ## The problem

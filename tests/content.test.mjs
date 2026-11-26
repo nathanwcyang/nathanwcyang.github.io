@@ -132,3 +132,15 @@ test("home link goes to the very top", () => {
   assert.ok(!/\sid="top"/.test(h), 'an element still has id="top", so /#top stops at it instead of the page top');
   assert.ok(h.includes('href="/#top"'), "Home link changed");
 });
+
+test("rxcounsel screenshot on project page", () => {
+  const h = html("/projects/rxcounsel");
+  assert.ok(h.includes("<figure"), "no <figure>");
+  const fig = h.slice(h.indexOf("<figure"), h.indexOf("</figure>"));
+  assert.match(fig, /src="\/_astro\/rxcounsel-input-screen[^"]*\.webp"/, "screenshot not served as webp from _astro");
+  assert.match(fig, /width="\d+"/); assert.match(fig, /height="\d+"/);
+  assert.ok(fig.includes("Generate button"), "alt text missing");
+  assert.ok(fig.replace(/&#39;/g, "'").includes("RxCounsel's input screen: the pharmacist enters patient details and the new drug, then clicks Generate."), "caption missing");
+  assert.ok(h.indexOf("</h1>") < h.indexOf("<figure") && h.indexOf("<figure") < h.indexOf("The problem"), "figure not between title and The problem");
+  assert.match(h, /property="og:image" content="[^"]*rxcounsel-input-screen/, "og:image not set");
+});
