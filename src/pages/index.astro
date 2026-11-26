@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
+import Section from "../components/home/Section.astro";
+import CvSections from "../components/cv/CvSections.astro";
 import { getSortedProjects } from "../lib/projects";
 import { SITE_EMAIL } from "../config";
 
@@ -9,7 +11,7 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
 ---
 
 <BaseLayout sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
+  <section id="top" class="pb-12 mt-5 scroll-mt-20 lg:scroll-mt-6">
     <h1 class="type-display">Nathan Yang</h1>
     <p class="type-lede pt-3 pb-1">Doctor of Pharmacy Student, University of Waterloo · Class of 2027</p>
     <div class="py-2">
@@ -37,25 +39,26 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
       <a class="btn btn-primary" href={`mailto:${SITE_EMAIL}`}>Email me</a>
       <a class="btn btn-outline" href="https://www.linkedin.com/in/nathanwcyang/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-  </div>
+  </section>
 
-  <div>
-    <h2 class="type-title w-full mb-2">Featured Projects</h2>
-  </div>
+  <Section id="projects" title="Featured Projects">
+    {
+      featured_projects.map((project) => (
+        <>
+          <HorizontalCard
+            title={project.data.title}
+            img={project.data.heroImage}
+            desc={project.data.description}
+            url={"/projects/" + project.slug}
+            target="_self"
+            badge={project.data.badge}
+          />
+          <div class="divider my-0" />
+        </>
+      ))
+    }
+    <a class="link link-hover type-meta" href="/projects">All projects →</a>
+  </Section>
 
-  {
-    featured_projects.map((project) => (
-      <>
-        <HorizontalCard
-          title={project.data.title}
-          img={project.data.heroImage}
-          desc={project.data.description}
-          url={"/projects/" + project.slug}
-          target="_self"
-          badge={project.data.badge}
-        />
-        <div class="divider my-0" />
-      </>
-    ))
-  }
+  <CvSections />
 </BaseLayout>
