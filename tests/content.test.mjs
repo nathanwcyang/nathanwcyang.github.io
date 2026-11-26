@@ -144,3 +144,15 @@ test("rxcounsel screenshot on project page", () => {
   assert.ok(h.indexOf("</h1>") < h.indexOf("<figure") && h.indexOf("<figure") < h.indexOf("The problem"), "figure not between title and The problem");
   assert.match(h, /property="og:image" content="[^"]*rxcounsel-input-screen/, "og:image not set");
 });
+
+test("project cards show the screenshot", () => {
+  for (const page of ["/", "/projects"]) {
+    const h = html(page);
+    const start = h.indexOf('href="/projects/rxcounsel"');
+    assert.ok(start > -1, `${page}: no RxCounsel card link`);
+    const card = h.slice(start, h.indexOf("</a>", start));
+    assert.match(card, /<img[^>]*src="\/_astro\/rxcounsel-input-screen[^"]*\.webp"/, `${page}: card has no screenshot`);
+    assert.match(card, /<img[^>]*alt=""/, `${page}: card image should be decorative (alt="")`);
+    assert.ok(card.includes(">RxCounsel<"), `${page}: card title missing`);
+  }
+});

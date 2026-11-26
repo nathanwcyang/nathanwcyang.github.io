@@ -24,7 +24,7 @@ Never put Nathan's phone number or home address on the site.
 
 ## Content
 
-- Projects live in `src/content/projects/*.md`. `category` is `pharmacy` or `creative`. `featured: true` pins a project to the top of the home page. The home page shows the first 3 (featured first, then newest).
+- Projects live in `src/content/projects/*.md`. `category` is `pharmacy` or `creative`. `featured: true` pins a project to the top of the home page. The home page shows the first 3 (featured first, then newest). A project's `heroImage` (in `src/assets/projects/<slug>/`) shows on its card (`src/components/ProjectCard.astro`) and at the top of its page. `heroAlt` is required with it. `heroCaption` is optional.
 - The home page is one long scroll: intro (no id: `/#top` relies on the browser scrolling to the page top when no element has that id), Featured Projects (`#projects`), then the CV: Experience (`#experience`), Education, Certifications, Skills. The CV lives in `src/components/cv/CvSections.astro`; each section uses `src/components/home/Section.astro`. `/cv` redirects to `/#experience`.
 - Sidebar links are `/#top`, `/#projects`, `/#experience` and `/contact`, with ids `nav-*` (never reuse a section id). The highlight follows the section in view.
 - The blog is hidden from the menu until the first real post. Re-add the Blog link in `src/components/SideBarMenu.astro` when publishing one.
