@@ -4,7 +4,7 @@ html {
   @apply font-sans antialiased;
 }
 body {
-  @apply leading-relaxed;
+  @apply text-base leading-relaxed;
 }
 strong, b {
   @apply font-bold;
@@ -20,6 +20,18 @@ strong, b {
   --tw-prose-quotes: var(--fallback-bc, oklch(var(--bc) / 1));
   --tw-prose-quote-borders: var(--fallback-p, oklch(var(--p) / 1));
   --tw-prose-links: var(--fallback-p, oklch(var(--p) / 1));
+}
+
+/* +1pt for text sized by daisyUI and the typography plugin instead of Tailwind classes
+   (buttons, footer, project write-ups). Keeps every size at default + 1pt. */
+.btn:not([class*="text-"]), .footer {
+  font-size: calc(0.875rem + 1pt);
+}
+.prose-lg {
+  font-size: calc(1.125rem + 1pt);
+}
+.prose-lg :where(h2):not(:where([class~="not-prose"] *)) {
+  font-size: calc(1.875rem + 1pt);
 }
 
 /* One font (Atkinson). Titles stand out by size and weight only. */

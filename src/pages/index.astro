@@ -14,16 +14,20 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
     <p class="type-lede pt-3 pb-1">Doctor of Pharmacy Student, University of Waterloo · Class of 2027</p>
     <div class="py-2">
       <p class="text-lg">
-        I have co-op experience in specialty, community and hospital pharmacy. I like finding the slow parts of a
-        pharmacy workflow and building tools to fix them. Outside pharmacy, I make music, films and photographs.
+        I'm a third-year PharmD student with a background in specialty, community and hospital pharmacy. Before
+        pharmacy, I spent time in fintech. I'm always happy to talk about AI, vibe coding and design!
+      </p>
+      <p class="text-lg mt-3">
+        When I'm not wearing my white coat, I nerd out on music production, photography and what makes an image look
+        great on a cinema screen :)
       </p>
     </div>
     <p class="type-meta flex flex-wrap items-center gap-x-2 gap-y-1 mt-4">
       <span class="inline-flex items-center gap-1">
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-        <a class="link link-hover" href="https://www.google.com/maps/search/?api=1&query=Mississauga%2C+Ontario" target="_blank" rel="noopener">Mississauga, Ontario</a>
+        <span>Mississauga, Ontario</span>
       </span>
-      <span aria-hidden="true">|</span>
+      <span aria-hidden="true" class="hidden sm:inline">|</span>
       <span class="inline-flex items-center gap-1">
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.51l-8 6.22-8-6.22V6h16zM4 18V9.04l7.39 5.75a1 1 0 0 0 1.22 0L20 9.04V18H4z"/></svg>
         <a class="link link-hover" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
