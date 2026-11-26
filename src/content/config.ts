@@ -1,18 +1,5 @@
 import { z, defineCollection, type SchemaContext } from "astro:content";
 type ImageFn = SchemaContext["image"];
-const blogSchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.string().optional(),
-    heroImage: z.string().optional(),
-    badge: z.string().optional(),
-    tags: z.array(z.string()).refine(items => new Set(items).size === items.length, {
-        message: 'tags must be unique',
-    }).optional(),
-});
-
-
 const projectSchema = ({ image }: { image: ImageFn }) => z.object({
     title: z.string(),
     description: z.string(),
@@ -32,12 +19,9 @@ const projectSchema = ({ image }: { image: ImageFn }) => z.object({
 }).refine((p) => !p.heroImage || p.heroAlt, { message: "heroAlt is required when heroImage is set", path: ["heroAlt"] });
 
 export type ProjectSchema = z.infer<ReturnType<typeof projectSchema>>;
-export type BlogSchema = z.infer<typeof blogSchema>;
 
 const projectCollection = defineCollection({ schema: projectSchema });
-const blogCollection = defineCollection({ schema: blogSchema });
 
 export const collections = {
-    'blog': blogCollection,
     'projects': projectCollection,
 }

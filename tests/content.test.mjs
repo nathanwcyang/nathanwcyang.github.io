@@ -1,13 +1,18 @@
 // Checks the built site (dist/) for exact copy. Run with: pnpm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 
 /** Built HTML for a site path, e.g. "/" or "/cv". */
 function html(path) {
   const clean = path.replace(/^\/|\/$/g, "");
   return readFileSync(new URL(`../dist/${clean ? clean + "/" : ""}index.html`, import.meta.url), "utf8");
 }
+
+test("blog is gone from the build", () => {
+  assert.ok(!existsSync(new URL("../dist/blog/index.html", import.meta.url)), "dist/blog exists");
+  assert.ok(!readFileSync(new URL("../dist/sitemap-0.xml", import.meta.url), "utf8").includes("/blog/"), "sitemap lists /blog/");
+});
 
 test("smoke", () => {
   assert.ok(html("/").includes("<h1"));
