@@ -6,7 +6,7 @@ const { sideBarActiveItemID } = Astro.props;
 <!-- Links live in NavMenu.tsx; the bouncing dot marks the current one -->
 <NavMenu client:load active={sideBarActiveItemID} className="grow shrink overflow-y-auto p-2 pl-6" />
 
-<script define:vars={{ sideBarActiveItemID: sideBarActiveItemID }}>
+<script data-astro-rerun define:vars={{ sideBarActiveItemID: sideBarActiveItemID }}>
 // This inline script re-runs after every page change (Astro view transitions),
 // so it must not add listeners that pile up. One scroll listener at a time.
 function setupMenuHighlight() {
