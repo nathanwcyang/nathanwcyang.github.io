@@ -18,7 +18,6 @@ test("hero", () => {
   for (const s of [
     ">Nathan Yang</h1>",
     "Mississauga, Ontario",
-    "google.com/maps/search/?api=1&query=Mississauga%2C+Ontario",
     ">Email me<",
     ">LinkedIn<",
     "linkedin.com/in/nathanwcyang",
@@ -41,10 +40,37 @@ test("cv", () => {
   ]) assert.ok(h.includes(s), `missing: ${s}`);
   for (const s of ["Co-op Pharmacy Student", "Partnered with a pharmacist lead", "Rebuilt as a Copilot agent"])
     assert.ok(!h.includes(s), `still has: ${s}`);
-  assert.equal((h.match(/<h3/g) || []).length, 6, "expected 2 education + 4 job titles as h3");
-});
+  });
 
 test("rxcounsel", () => {
   assert.ok(html("/projects/rxcounsel").includes("7–12 complex counselling sessions"), "missing: sessions range on project page");
   assert.ok(html("/").includes("roughly 1–1.5 hours a day per pharmacist"), "missing: time saved on home card");
+});
+
+test("intro and location", () => {
+  const h = html("/");
+  for (const s of [
+    "I'm a third-year PharmD student with a background in specialty, community and hospital pharmacy. Before pharmacy, I spent time in fintech. I'm always happy to talk about AI, vibe coding and design.",
+    "When I'm not wearing my white coat, I nerd out on music production, photography and what makes an image look great on a cinema screen.",
+    "Mississauga, Ontario",
+  ]) assert.ok(h.replace(/\s+/g, " ").includes(s), `missing: ${s}`);
+  assert.ok(!h.includes("I like finding the slow parts"), "old intro still there");
+  for (const page of ["/", "/cv", "/projects", "/projects/rxcounsel"])
+    assert.ok(!html(page).includes("google.com/maps"), `Maps link still on ${page}`);
+});
+
+test("cv profile removed and Relay added", () => {
+  const h = html("/cv");
+  assert.ok(!h.includes(">Profile</h2>"), "Profile heading still there");
+  assert.ok(!h.includes("Third-year Doctor of Pharmacy student"), "Profile text still there");
+  for (const s of [
+    ">Customer Experience Specialist</h3>",
+    "Relay | Full-time | Toronto, ON | February–December 2023",
+    "Resolved 10,000+ support cases across email, phone and live chat",
+    "Used Zendesk, Jira, Guru and Slack daily to manage support workflows and refine team processes",
+    "Earned 20+ five-star reviews on Relay's public Trustpilot page for thorough troubleshooting and attentive service.",
+  ]) assert.ok(h.replace(/\s+/g, " ").includes(s), `missing: ${s}`);
+  const at = (s) => h.indexOf(s);
+  assert.ok(at("Trillium Health Partners") < at("Relay | Full-time") && at("Relay | Full-time") < at("CareRx Pharmacy |"), "Relay not between Trillium and CareRx");
+  assert.equal((h.match(/<h3/g) || []).length, 7, "expected 2 education + 5 job titles");
 });
