@@ -20,22 +20,23 @@ function setupMenuHighlight() {
   const highlight = (id) => links.forEach((a) => a.classList.toggle(activeClass, a.id === `nav-${id}`));
 
   // Other pages: highlight the page's own link.
-  if (!document.getElementById("top")) {
+  if (!document.getElementById("projects")) {
     highlight(sideBarActiveItemID);
     return;
   }
 
   // Home page: highlight the link for the section in view.
-  const linkFor = { top: "home", projects: "projects", experience: "cv", education: "cv", certifications: "cv", skills: "cv" };
+  // The intro has no id on purpose: /#top then scrolls to the very top of the page.
+  const linkFor = { projects: "projects", experience: "cv", education: "cv", certifications: "cv", skills: "cv" };
   const sections = Object.keys(linkFor).map((id) => document.getElementById(id)).filter(Boolean);
   // The active section is the last one whose top has scrolled past a line just below the
   // top of the screen (past the sticky phone header). At the very bottom, CV wins.
   const LINE = 120;
   const update = () => {
     const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-    let current = "top";
-    for (const s of sections) if (s.getBoundingClientRect().top <= LINE) current = s.id;
-    highlight(atBottom ? "cv" : linkFor[current]);
+    let current = "home";
+    for (const s of sections) if (s.getBoundingClientRect().top <= LINE) current = linkFor[s.id];
+    highlight(atBottom ? "cv" : current);
   };
   const controller = new AbortController();
   window.__navScrollAbort = controller;

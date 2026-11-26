@@ -4,17 +4,20 @@ description: "An AI counselling-prep tool I built on my own initiative during my
 category: "pharmacy"
 date: 2026-08-31
 featured: true
+heroImage: "../../assets/projects/rxcounsel/rxcounsel-input-screen.png"
+heroAlt: "RxCounsel's input form, with fields for age, sex, renal and hepatic impairment, current medications, medical conditions and an input modifier, a New drug(s) section for drug name, dose and sig, and a Generate button."
+heroCaption: "RxCounsel's input screen: the pharmacist enters patient details and the new drug, then clicks Generate."
 ---
 
 ## The problem
 
-During my co-op at Express Scripts Canada Pharmacy, I counselled patients by phone on new specialty prescriptions. Preparing for each call meant pulling together key counselling points, dosing details and kidney or liver considerations from several sources. That prep took time on every call.
+During my co-op at Express Scripts Canada Pharmacy, I counselled patients by phone on new specialty prescriptions. Before each call, I spent time pulling together the counselling points, dosing details and kidney or liver considerations from several sources.
 
 ## What I built
 
 On my own time, I designed RxCounsel, an AI tool that prepares a drug-specific counselling guide for each new prescription. Each guide covers:
 
-- Key counselling messages
+- The main counselling messages for the patient
 - Dosing, with a check for unusual dose patterns
 - Renal and hepatic considerations
 - Points tailored to the patient's current medications and demographics
@@ -23,7 +26,7 @@ On my own time, I designed RxCounsel, an AI tool that prepares a drug-specific c
 
 I worked with a pharmacist who acted as an informal project lead. They set priorities, tested each version and told me what to build next.
 
-The pharmacy also needed every recommendation tied to a referenced source. I rebuilt RxCounsel as a Copilot agent that cites Canadian clinical guidelines.
+The pharmacy also needed every recommendation tied to a referenced source, so I rebuilt RxCounsel as a Copilot agent that cites Canadian clinical guidelines.
 
 ## Result
 

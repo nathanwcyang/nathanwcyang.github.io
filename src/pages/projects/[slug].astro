@@ -10,16 +10,21 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await project.render();
-const { title, description, heroImage, badge } = project.data;
+const { title, description, heroImage, heroAlt, heroCaption, badge } = project.data;
 ---
 
-<BaseLayout title={title} description={description} image={heroImage} sideBarActiveItemID="projects">
+<BaseLayout title={title} description={description} image={heroImage?.src} sideBarActiveItemID="projects">
   <div class="md:flex md:justify-center">
     <article class="prose prose-lg max-w-[750px] prose-img:mx-auto prose-h2:font-bold prose-h3:font-semibold prose-blockquote:italic prose-a:text-primary">
-      {heroImage && <Image width={750} height={422} format="webp" src={heroImage} alt={title} class="w-full mb-6" />}
       <h1 class="title my-2 type-display">{title}</h1>
       {badge && <div class="badge badge-secondary my-1">{badge}</div>}
       <div class="divider my-2"></div>
+      {heroImage && (
+        <figure class="not-prose my-6">
+          <Image src={heroImage} alt={heroAlt} width={750} densities={[1, 2]} format="webp" loading="eager" class="w-full h-auto" />
+          {heroCaption && <figcaption class="type-meta mt-2">{heroCaption}</figcaption>}
+        </figure>
+      )}
       <Content />
       <div class="divider my-2"></div>
       <a href="/projects" class="no-underline">← All projects</a>

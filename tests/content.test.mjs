@@ -76,7 +76,7 @@ test("cv profile removed and Relay added", () => {
 
 test("home sections in order", () => {
   const h = html("/");
-  const ids = ["top", "projects", "experience", "education", "certifications", "skills"].map((id) => h.indexOf(`id="${id}"`));
+  const ids = ["projects", "experience", "education", "certifications", "skills"].map((id) => h.indexOf(`id="${id}"`));
   ids.forEach((i, n) => assert.ok(i > -1, `missing section #${n}`));
   for (let n = 1; n < ids.length; n++) assert.ok(ids[n] > ids[n - 1], "sections out of order");
   for (const s of [">Featured Projects<", ">Experience<", ">Education<", ">Certifications<", ">Skills<", 'href="/projects"', "All projects"])
@@ -113,5 +113,46 @@ test("no duplicate ids", () => {
     const ids = [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
     const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
     assert.deepEqual(dupes, [], `${page}: duplicate ids ${dupes.join(", ")}`);
+  }
+});
+
+test("rxcounsel humanized copy", () => {
+  const h = html("/projects/rxcounsel").replace(/\s+/g, " ");
+  for (const s of [
+    "Before each call, I spent time pulling together the counselling points, dosing details and kidney or liver considerations from several sources.",
+    "The main counselling messages for the patient",
+    "tied to a referenced source, so I rebuilt RxCounsel",
+  ]) assert.ok(h.includes(s), `missing: ${s}`);
+  for (const s of ["That prep took time on every call", "Key counselling messages"])
+    assert.ok(!h.includes(s), `still has: ${s}`);
+});
+
+test("home link goes to the very top", () => {
+  const h = html("/");
+  assert.ok(!/\sid="top"/.test(h), 'an element still has id="top", so /#top stops at it instead of the page top');
+  assert.ok(h.includes('href="/#top"'), "Home link changed");
+});
+
+test("rxcounsel screenshot on project page", () => {
+  const h = html("/projects/rxcounsel");
+  assert.ok(h.includes("<figure"), "no <figure>");
+  const fig = h.slice(h.indexOf("<figure"), h.indexOf("</figure>"));
+  assert.match(fig, /src="\/_astro\/rxcounsel-input-screen[^"]*\.webp"/, "screenshot not served as webp from _astro");
+  assert.match(fig, /width="\d+"/); assert.match(fig, /height="\d+"/);
+  assert.ok(fig.includes("Generate button"), "alt text missing");
+  assert.ok(fig.replace(/&#39;/g, "'").includes("RxCounsel's input screen: the pharmacist enters patient details and the new drug, then clicks Generate."), "caption missing");
+  assert.ok(h.indexOf("</h1>") < h.indexOf("<figure") && h.indexOf("<figure") < h.indexOf("The problem"), "figure not between title and The problem");
+  assert.match(h, /property="og:image" content="[^"]*rxcounsel-input-screen/, "og:image not set");
+});
+
+test("project cards show the screenshot", () => {
+  for (const page of ["/", "/projects"]) {
+    const h = html(page);
+    const start = h.indexOf('href="/projects/rxcounsel"');
+    assert.ok(start > -1, `${page}: no RxCounsel card link`);
+    const card = h.slice(start, h.indexOf("</a>", start));
+    assert.match(card, /<img[^>]*src="\/_astro\/rxcounsel-input-screen[^"]*\.webp"/, `${page}: card has no screenshot`);
+    assert.match(card, /<img[^>]*alt=""/, `${page}: card image should be decorative (alt="")`);
+    assert.ok(card.includes(">RxCounsel<"), `${page}: card title missing`);
   }
 });

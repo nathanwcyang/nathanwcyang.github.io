@@ -1,4 +1,5 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, type SchemaContext } from "astro:content";
+type ImageFn = SchemaContext["image"];
 const blogSchema = z.object({
     title: z.string(),
     description: z.string(),
@@ -12,7 +13,7 @@ const blogSchema = z.object({
 });
 
 
-const projectSchema = z.object({
+const projectSchema = ({ image }: { image: ImageFn }) => z.object({
     title: z.string(),
     description: z.string(),
     // Which section of the Projects page it appears in
@@ -21,11 +22,16 @@ const projectSchema = z.object({
     date: z.coerce.date(),
     // Featured projects always show first on the home page
     featured: z.boolean().default(false),
-    heroImage: z.string().optional(),
+    // Screenshot in src/assets/projects/<slug>/. Shows on the card and at the top of the page.
+    heroImage: image().optional(),
+    // Screen-reader description of heroImage (required with it)
+    heroAlt: z.string().optional(),
+    // Optional caption under the image on the project page
+    heroCaption: z.string().optional(),
     badge: z.string().optional(),
-});
+}).refine((p) => !p.heroImage || p.heroAlt, { message: "heroAlt is required when heroImage is set", path: ["heroAlt"] });
 
-export type ProjectSchema = z.infer<typeof projectSchema>;
+export type ProjectSchema = z.infer<ReturnType<typeof projectSchema>>;
 export type BlogSchema = z.infer<typeof blogSchema>;
 
 const projectCollection = defineCollection({ schema: projectSchema });
