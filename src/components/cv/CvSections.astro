@@ -1,81 +1,69 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import TimeLineElement from "../components/cv/TimeLine.astro";
+// The CV, shown on the home page below Featured Projects.
+// Order: Experience, Education, Certifications, Skills.
+import Section from "../home/Section.astro";
+import TimeLineElement from "./TimeLine.astro";
 ---
 
-<BaseLayout title="CV" sideBarActiveItemID="cv">
-  <h1 class="sr-only">Nathan Yang: CV</h1>
-  <div class="mb-5">
-    <h2 class="type-title w-full">Education</h2>
-  </div>
-
-  <div class="time-line-container grid gap-4 mb-10">
-    <TimeLineElement title="Doctor of Pharmacy Candidate (PharmD)" subtitle="2024 to 2027 at the University of Waterloo" />
-    <TimeLineElement
-      title="Bachelor of Health Sciences, Specialization in Health Sciences"
-      subtitle="2018 to 2022 at Western University"
-    />
-  </div>
-
-  <div class="mb-5">
-    <h2 class="type-title w-full">Experience</h2>
-  </div>
-
-  <div class="time-line-container mb-10">
-    <TimeLineElement title="Pharmacy Student; Workflow Development" subtitle="Express Scripts Canada Pharmacy | Co-op | Mississauga, ON | May–August 2026">
+<Section id="experience" title="Experience">
+  <div class="time-line-container">
+    <TimeLineElement title="Pharmacy Student; Workflow Development" org="Express Scripts Canada Pharmacy" type="Co-op" location="Mississauga, ON" dates="May–August 2026">
       <ul class="list-disc ml-5 space-y-1">
         <li>Counselled patients by phone on specialty medications, including GLP-1/GIP agonists, CGRP antibodies, antiepileptics and injectable biologics</li>
         <li>Verified cold-chain prescriptions against manufacturer handling requirements</li>
       </ul>
       <p slot="achievements">Built <a href="/projects/rxcounsel" class="font-semibold text-primary underline">RxCounsel</a>, a self-initiated AI counselling-prep tool. Piloted with 3 pharmacists, it saved about 8 minutes per complex counselling session: roughly 1–1.5 hours a day per pharmacist.</p>
     </TimeLineElement>
-    <TimeLineElement title="Pharmacy Student" subtitle="Rexall Pharmacy #1321 | Co-op | Mississauga, ON | September–December 2025">
+    <TimeLineElement title="Pharmacy Student" org="Rexall Pharmacy #1321" type="Co-op" location="Mississauga, ON" dates="September–December 2025">
       <ul class="list-disc ml-5 space-y-1">
         <li>Counselled patients on new and refill prescriptions and over-the-counter options</li>
         <li>Adjudicated insurance claims and set up InnoviCares copay assistance</li>
       </ul>
       <p slot="achievements">Led a two-month vaccine clinic, giving 500+ COVID-19 and flu vaccinations.</p>
     </TimeLineElement>
-    <TimeLineElement title="Pharmacy Student" subtitle="Trillium Health Partners, Credit Valley Hospital | Co-op | Mississauga, ON | January–April 2025">
+    <TimeLineElement title="Pharmacy Student" org="Trillium Health Partners, Credit Valley Hospital" type="Co-op" location="Mississauga, ON" dates="January–April 2025">
       <ul class="list-disc ml-5 space-y-1">
         <li>Stocked Pyxis cabinets with unit-dose and ward-stock medications, and tracked expiries and recalls</li>
         <li>Compounded and prepackaged narcotics, oral suspensions and PRN doses to NAPRA standards</li>
       </ul>
       <p slot="achievements">Led a data-analysis project for the lead medication management pharmacist, comparing the hospital's hazardous-medication list with the SaPHE list used by 5 Toronto hospitals, and presented the gap analysis.</p>
     </TimeLineElement>
-    <TimeLineElement title="Customer Experience Specialist" subtitle="Relay | Full-time | Toronto, ON | February–December 2023">
+    <TimeLineElement title="Customer Experience Specialist" org="Relay" type="Full-time" location="Toronto, ON" dates="February–December 2023">
       <ul class="list-disc ml-5 space-y-1">
         <li>Resolved 10,000+ support cases across email, phone and live chat</li>
         <li>Used Zendesk, Jira, Guru and Slack daily to manage support workflows and refine team processes</li>
       </ul>
       <p slot="achievements">Earned 20+ five-star reviews on Relay's public Trustpilot page for thorough troubleshooting and attentive service.</p>
     </TimeLineElement>
-    <TimeLineElement title="Collections Specialist" subtitle="CareRx Pharmacy | Full-time | Oakville, ON | May–September 2022">
+    <TimeLineElement title="Collections Specialist" org="CareRx Pharmacy" type="Full-time" location="Oakville, ON" dates="May–September 2022">
       <ul class="list-disc ml-5 space-y-1">
         <li>Managed 120+ day overdue accounts after the Medical Pharmacies acquisition, working with long-term care and retirement homes across the GTA</li>
       </ul>
       <p slot="achievements">Collected over $150,000 in the first month.</p>
     </TimeLineElement>
   </div>
+</Section>
 
-  <div class="mb-5">
-    <h2 class="type-title w-full">Certifications</h2>
+<Section id="education" title="Education">
+  <div class="time-line-container grid gap-4">
+    <TimeLineElement title="Doctor of Pharmacy Candidate (PharmD)" org="University of Waterloo" dates="2024–2027" />
+    <TimeLineElement title="Bachelor of Health Sciences, Specialization in Health Sciences" org="Western University" dates="2018–2022" />
   </div>
+</Section>
 
-  <ul class="list-disc mx-6 mb-10 grid gap-2">
+<Section id="certifications" title="Certifications">
+  <ul class="list-disc ml-5 grid gap-2">
     <li>Injection certified (2025)</li>
     <li>Standard First Aid, CPR and AED Level C (2024 to 2027)</li>
   </ul>
+</Section>
 
-  <div class="mb-5">
-    <h2 class="type-title w-full">Skills</h2>
-  </div>
-
-  <ul class="list-disc mx-6 grid gap-2">
+<Section id="skills" title="Skills">
+  <ul class="list-disc ml-5 grid gap-2">
     <li><span class="font-semibold">Pharmacy software:</span> Propel, Kroll, Lexi-Drug, Microsoft Office</li>
     <li>
       <span class="font-semibold">Technical &amp; creative:</span> Claude and Copilot agents, React/Tailwind, DaVinci
       Resolve, audio mixing, photography
     </li>
   </ul>
-</BaseLayout>
+</Section>

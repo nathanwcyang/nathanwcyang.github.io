@@ -26,13 +26,12 @@ test("hero", () => {
 });
 
 test("cv", () => {
-  const h = html("/cv");
+  const h = html("/").replace(/\s+/g, " ");
   for (const s of [
     "Pharmacy Student; Workflow Development",
-    "Express Scripts Canada Pharmacy | Co-op | Mississauga, ON | May–August 2026",
-    "Rexall Pharmacy #1321 | Co-op | Mississauga, ON | September–December 2025",
-    "Trillium Health Partners, Credit Valley Hospital | Co-op | Mississauga, ON | January–April 2025",
-    "CareRx Pharmacy | Full-time | Oakville, ON | May–September 2022",
+    "Express Scripts Canada Pharmacy", "Rexall Pharmacy #1321", "Trillium Health Partners, Credit Valley Hospital", "CareRx Pharmacy",
+    "Mississauga, ON", "Oakville, ON", "Co-op", "Full-time",
+    "May–August 2026", "September–December 2025", "January–April 2025", "May–September 2022",
     "Key achievements",
     "1–1.5 hours a day per pharmacist",
     "lead medication management pharmacist",
@@ -40,7 +39,7 @@ test("cv", () => {
   ]) assert.ok(h.includes(s), `missing: ${s}`);
   for (const s of ["Co-op Pharmacy Student", "Partnered with a pharmacist lead", "Rebuilt as a Copilot agent"])
     assert.ok(!h.includes(s), `still has: ${s}`);
-  });
+});
 
 test("rxcounsel", () => {
   assert.ok(html("/projects/rxcounsel").includes("7–12 complex counselling sessions"), "missing: sessions range on project page");
@@ -60,17 +59,59 @@ test("intro and location", () => {
 });
 
 test("cv profile removed and Relay added", () => {
-  const h = html("/cv");
+  const h = html("/").replace(/\s+/g, " ");
   assert.ok(!h.includes(">Profile</h2>"), "Profile heading still there");
   assert.ok(!h.includes("Third-year Doctor of Pharmacy student"), "Profile text still there");
   for (const s of [
     ">Customer Experience Specialist</h3>",
-    "Relay | Full-time | Toronto, ON | February–December 2023",
+    "Relay", "Toronto, ON", "February–December 2023",
     "Resolved 10,000+ support cases across email, phone and live chat",
     "Used Zendesk, Jira, Guru and Slack daily to manage support workflows and refine team processes",
     "Earned 20+ five-star reviews on Relay's public Trustpilot page for thorough troubleshooting and attentive service.",
-  ]) assert.ok(h.replace(/\s+/g, " ").includes(s), `missing: ${s}`);
+  ]) assert.ok(h.includes(s), `missing: ${s}`);
   const at = (s) => h.indexOf(s);
-  assert.ok(at("Trillium Health Partners") < at("Relay | Full-time") && at("Relay | Full-time") < at("CareRx Pharmacy |"), "Relay not between Trillium and CareRx");
-  assert.equal((h.match(/<h3/g) || []).length, 7, "expected 2 education + 5 job titles");
+  assert.ok(at("Trillium Health Partners") < at("Customer Experience Specialist") && at("Customer Experience Specialist") < at("Collections Specialist"), "Relay not between Trillium and CareRx");
+  assert.equal((h.match(/<h3/g) || []).length, 8, "expected 1 project card + 2 education + 5 job titles");
+});
+
+test("home sections in order", () => {
+  const h = html("/");
+  const ids = ["top", "projects", "experience", "education", "certifications", "skills"].map((id) => h.indexOf(`id="${id}"`));
+  ids.forEach((i, n) => assert.ok(i > -1, `missing section #${n}`));
+  for (let n = 1; n < ids.length; n++) assert.ok(ids[n] > ids[n - 1], "sections out of order");
+  for (const s of [">Featured Projects<", ">Experience<", ">Education<", ">Certifications<", ">Skills<", 'href="/projects"', "All projects"])
+    assert.ok(h.includes(s), `missing: ${s}`);
+});
+
+test("sidebar links", () => {
+  for (const page of ["/", "/projects/rxcounsel"]) {
+    const h = html(page);
+    const menu = h.slice(h.indexOf('<ul class="menu'), h.indexOf("</ul>", h.indexOf('<ul class="menu')));
+    for (const s of ['href="/#top"', 'href="/#projects"', 'href="/#experience"', 'href="/contact"'])
+      assert.ok(menu.includes(s), `${page}: menu missing ${s}`);
+    assert.ok(!menu.includes('href="mailto:'), `${page}: menu still has a mailto link`);
+  }
+});
+
+test("cv forwards", () => {
+  const h = html("/cv");
+  assert.ok(h.includes("/#experience"), "/cv does not point to /#experience");
+  assert.ok(h.includes('http-equiv="refresh"'), "/cv is not a redirect page");
+});
+
+test("contact page", () => {
+  const h = html("/contact");
+  for (const s of [">Contact</h1>", "Best way to reach me is email.", "mailto:nwyang@uwaterloo.ca", "linkedin.com/in/nathanwcyang", "Mississauga, Ontario"])
+    assert.ok(h.includes(s), `missing: ${s}`);
+  assert.ok(!h.includes("google.com/maps"), "Maps link on contact page");
+});
+
+test("no duplicate ids", () => {
+  for (const page of ["/", "/projects", "/projects/rxcounsel", "/contact"]) {
+    let h;
+    try { h = html(page); } catch { continue; }
+    const ids = [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+    const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
+    assert.deepEqual(dupes, [], `${page}: duplicate ids ${dupes.join(", ")}`);
+  }
 });

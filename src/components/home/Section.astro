@@ -1,0 +1,12 @@
+---
+// One home-page section: title on the left and content on the right on wide screens, stacked on phones.
+// scroll-mt keeps the title clear of the sticky phone header when a sidebar link jumps here.
+const { id, title } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-title`} class="scroll-mt-20 lg:scroll-mt-6 mb-12 lg:grid lg:grid-cols-[11rem_1fr] lg:gap-10">
+  <h2 id={`${id}-title`} class="type-title mb-5">{title}</h2>
+  <div>
+    <slot />
+  </div>
+</section>

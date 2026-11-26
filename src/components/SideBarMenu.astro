@@ -1,22 +1,46 @@
 ---
-import { SITE_EMAIL } from "../config";
 const { sideBarActiveItemID } = Astro.props;
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="home" href="/">Home</a></li>
-    <li><a class="py-3 text-base" id="projects" href="/projects">Projects</a></li>
-    <li><a class="py-3 text-base" id="cv" href="/cv">CV</a></li>
-    <li>
-        <a
-            class="py-3 text-base"
-            href={`mailto:${SITE_EMAIL}`}>Contact</a
-        >
-    </li>
+    <li><a class="py-3 text-base" id="nav-home" href="/#top">Home</a></li>
+    <li><a class="py-3 text-base" id="nav-projects" href="/#projects">Projects</a></li>
+    <li><a class="py-3 text-base" id="nav-cv" href="/#experience">CV</a></li>
+    <li><a class="py-3 text-base" id="nav-contact" href="/contact">Contact</a></li>
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
-const activeItemElem = document.getElementById(sideBarActiveItemID);
-activeItemElem && activeItemElem.classList.add(activeClass);
+// This inline script re-runs after every page change (Astro view transitions),
+// so it must not add listeners that pile up. One scroll listener at a time.
+function setupMenuHighlight() {
+  window.__navScrollAbort?.abort();
+  // Sidebar link ids are "nav-" + name, so they never clash with section ids on the page.
+  const links = ["home", "projects", "cv", "contact"].map((id) => document.getElementById(`nav-${id}`)).filter(Boolean);
+  const highlight = (id) => links.forEach((a) => a.classList.toggle(activeClass, a.id === `nav-${id}`));
+
+  // Other pages: highlight the page's own link.
+  if (!document.getElementById("top")) {
+    highlight(sideBarActiveItemID);
+    return;
+  }
+
+  // Home page: highlight the link for the section in view.
+  const linkFor = { top: "home", projects: "projects", experience: "cv", education: "cv", certifications: "cv", skills: "cv" };
+  const sections = Object.keys(linkFor).map((id) => document.getElementById(id)).filter(Boolean);
+  // The active section is the last one whose top has scrolled past a line just below the
+  // top of the screen (past the sticky phone header). At the very bottom, CV wins.
+  const LINE = 120;
+  const update = () => {
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    let current = "top";
+    for (const s of sections) if (s.getBoundingClientRect().top <= LINE) current = s.id;
+    highlight(atBottom ? "cv" : linkFor[current]);
+  };
+  const controller = new AbortController();
+  window.__navScrollAbort = controller;
+  window.addEventListener("scroll", update, { passive: true, signal: controller.signal });
+  update();
+}
+setupMenuHighlight();
 </script>
