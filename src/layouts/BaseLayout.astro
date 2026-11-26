@@ -91,8 +91,7 @@ const {
         );
         sync();
       }
-      setupMenu();
-      document.addEventListener("astro:after-swap", setupMenu);
+      document.addEventListener("astro:page-load", setupMenu);
     </script>
   </body>
 </html>
