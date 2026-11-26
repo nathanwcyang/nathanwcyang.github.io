@@ -115,3 +115,14 @@ test("no duplicate ids", () => {
     assert.deepEqual(dupes, [], `${page}: duplicate ids ${dupes.join(", ")}`);
   }
 });
+
+test("rxcounsel humanized copy", () => {
+  const h = html("/projects/rxcounsel").replace(/\s+/g, " ");
+  for (const s of [
+    "Before each call, I spent time pulling together the counselling points, dosing details and kidney or liver considerations from several sources.",
+    "The main counselling messages for the patient",
+    "tied to a referenced source, so I rebuilt RxCounsel",
+  ]) assert.ok(h.includes(s), `missing: ${s}`);
+  for (const s of ["That prep took time on every call", "Key counselling messages"])
+    assert.ok(!h.includes(s), `still has: ${s}`);
+});
