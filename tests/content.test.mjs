@@ -76,7 +76,7 @@ test("cv profile removed and Relay added", () => {
 
 test("home sections in order", () => {
   const h = html("/");
-  const ids = ["top", "projects", "experience", "education", "certifications", "skills"].map((id) => h.indexOf(`id="${id}"`));
+  const ids = ["projects", "experience", "education", "certifications", "skills"].map((id) => h.indexOf(`id="${id}"`));
   ids.forEach((i, n) => assert.ok(i > -1, `missing section #${n}`));
   for (let n = 1; n < ids.length; n++) assert.ok(ids[n] > ids[n - 1], "sections out of order");
   for (const s of [">Featured Projects<", ">Experience<", ">Education<", ">Certifications<", ">Skills<", 'href="/projects"', "All projects"])
@@ -125,4 +125,10 @@ test("rxcounsel humanized copy", () => {
   ]) assert.ok(h.includes(s), `missing: ${s}`);
   for (const s of ["That prep took time on every call", "Key counselling messages"])
     assert.ok(!h.includes(s), `still has: ${s}`);
+});
+
+test("home link goes to the very top", () => {
+  const h = html("/");
+  assert.ok(!/\sid="top"/.test(h), 'an element still has id="top", so /#top stops at it instead of the page top');
+  assert.ok(h.includes('href="/#top"'), "Home link changed");
 });
