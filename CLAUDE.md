@@ -31,6 +31,6 @@ Never put Nathan's phone number or home address on the site.
 
 ## Design
 
-The site uses one font (Atkinson Hyperlegible Next). Fonts, text styles and colours follow `docs/design/typography.md`. Use the `type-*` classes and theme colour names (`text-primary`, `bg-base-200`); never hard-code fonts, sizes or hex colours on a page.
+The site uses one font (Atkinson Hyperlegible Next). Fonts, text styles and colours follow `docs/design/typography.md`. Use the `type-*` classes and shadcn colour names (`text-primary`, `bg-muted`; CSS variables in `src/styles/global.css` holding Flexoki values); never hard-code fonts, sizes or hex colours on a page.
 
 The site is light-only (`flexoki-light`); there is no dark mode. The sidebar avatar orb and bouncing menu dot are Rare UI components in `src/components/ui/` (credited in the README).

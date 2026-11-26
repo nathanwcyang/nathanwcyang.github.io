@@ -1,5 +1,30 @@
 /* Type spec: see docs/design/typography.md */
 
+/* Colours: shadcn names, Flexoki values as RGB channels. See docs/design/typography.md.
+   daisyUI components still read src/styles/themes.cjs until the drawer ticket. */
+:root {
+  --background: 255 252 240; /* paper #FFFCF0 */
+  --foreground: 16 15 15; /* black #100F0F */
+  --card: 255 252 240;
+  --card-foreground: 16 15 15;
+  --popover: 255 252 240;
+  --popover-foreground: 16 15 15;
+  --primary: 32 94 166; /* blue-600 #205EA6 */
+  --primary-foreground: 255 252 240;
+  --secondary: 242 240 229; /* base-50 #F2F0E5 */
+  --secondary-foreground: 16 15 15;
+  --muted: 242 240 229;
+  --muted-foreground: 111 110 105; /* base-600 #6F6E69 */
+  --accent: 230 228 217; /* base-100 #E6E4D9 */
+  --accent-foreground: 16 15 15;
+  --destructive: 175 48 41; /* red-600 #AF3029 */
+  --destructive-foreground: 255 252 240;
+  --border: 230 228 217;
+  --input: 230 228 217;
+  --ring: 32 94 166;
+  --radius: 0.25rem;
+}
+
 html {
   @apply font-sans antialiased;
 }
@@ -18,14 +43,14 @@ strong, b {
 
 /* Write-up pages: use theme colours instead of the typography plugin's greys */
 .prose {
-  --tw-prose-body: var(--fallback-bc, oklch(var(--bc) / 0.9));
-  --tw-prose-headings: var(--fallback-bc, oklch(var(--bc) / 1));
-  --tw-prose-bold: var(--fallback-bc, oklch(var(--bc) / 1));
-  --tw-prose-bullets: var(--fallback-bc, oklch(var(--bc) / 0.5));
-  --tw-prose-hr: var(--fallback-b3, oklch(var(--b3) / 1));
-  --tw-prose-quotes: var(--fallback-bc, oklch(var(--bc) / 1));
-  --tw-prose-quote-borders: var(--fallback-p, oklch(var(--p) / 1));
-  --tw-prose-links: var(--fallback-p, oklch(var(--p) / 1));
+  --tw-prose-body: rgb(var(--foreground) / 0.9);
+  --tw-prose-headings: rgb(var(--foreground) / 1);
+  --tw-prose-bold: rgb(var(--foreground) / 1);
+  --tw-prose-bullets: rgb(var(--foreground) / 0.5);
+  --tw-prose-hr: rgb(var(--border));
+  --tw-prose-quotes: rgb(var(--foreground) / 1);
+  --tw-prose-quote-borders: rgb(var(--primary));
+  --tw-prose-links: rgb(var(--primary));
 }
 
 /* +1pt for text sized by daisyUI and the typography plugin instead of Tailwind classes
@@ -57,10 +82,10 @@ strong, b {
   @apply font-sans font-semibold text-base leading-snug;
 }
 .type-label {
-  @apply font-sans font-semibold text-xs uppercase tracking-wider text-base-content/70;
+  @apply font-sans font-semibold text-xs uppercase tracking-wider text-foreground/70;
 }
 .type-meta {
-  @apply font-sans text-sm text-base-content/70;
+  @apply font-sans text-sm text-foreground/70;
 }
 
 .time-line-container>div:last-child .education__time>.education__line {
@@ -69,10 +94,10 @@ strong, b {
 
 /* Accessibility: a clear focus ring for keyboard users (Flexoki blue) */
 :focus-visible {
-  outline: 2px solid var(--fallback-p, oklch(var(--p) / 1));
+  outline: 2px solid rgb(var(--primary));
   outline-offset: 2px;
 }
 .drawer-toggle:focus-visible ~ .drawer-content .menu-toggle {
-  outline: 2px solid var(--fallback-p, oklch(var(--p) / 1));
+  outline: 2px solid rgb(var(--primary));
   outline-offset: 2px;
 }
