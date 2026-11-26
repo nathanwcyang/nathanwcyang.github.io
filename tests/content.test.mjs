@@ -50,8 +50,8 @@ test("rxcounsel", () => {
 test("intro and location", () => {
   const h = html("/");
   for (const s of [
-    "I'm a third-year PharmD student with a background in specialty, community and hospital pharmacy. Before pharmacy, I spent time in fintech. I'm always happy to talk about AI, vibe coding and design.",
-    "When I'm not wearing my white coat, I nerd out on music production, photography and what makes an image look great on a cinema screen.",
+    "I'm a third-year PharmD student with a background in specialty, community and hospital pharmacy. Before pharmacy, I spent time in fintech. I'm always happy to talk about AI, vibe coding and design!",
+    "When I'm not wearing my white coat, I nerd out on music production, photography and what makes an image look great on a cinema screen :)",
     "Mississauga, Ontario",
   ]) assert.ok(h.replace(/\s+/g, " ").includes(s), `missing: ${s}`);
   assert.ok(!h.includes("I like finding the slow parts"), "old intro still there");
