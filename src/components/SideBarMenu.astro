@@ -11,7 +11,10 @@ const activeClass = "bg-base-300"; // For primary color replace with `active` cl
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
+// This inline script re-runs after every page change (Astro view transitions),
+// so it must not add listeners that pile up. One scroll listener at a time.
 function setupMenuHighlight() {
+  window.__navScrollAbort?.abort();
   // Sidebar link ids are "nav-" + name, so they never clash with section ids on the page.
   const links = ["home", "projects", "cv", "contact"].map((id) => document.getElementById(`nav-${id}`)).filter(Boolean);
   const highlight = (id) => links.forEach((a) => a.classList.toggle(activeClass, a.id === `nav-${id}`));
@@ -34,9 +37,10 @@ function setupMenuHighlight() {
     for (const s of sections) if (s.getBoundingClientRect().top <= LINE) current = s.id;
     highlight(atBottom ? "cv" : linkFor[current]);
   };
-  window.addEventListener("scroll", update, { passive: true });
+  const controller = new AbortController();
+  window.__navScrollAbort = controller;
+  window.addEventListener("scroll", update, { passive: true, signal: controller.signal });
   update();
 }
 setupMenuHighlight();
-document.addEventListener("astro:after-swap", setupMenuHighlight);
 </script>
