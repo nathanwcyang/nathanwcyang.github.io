@@ -25,6 +25,8 @@ Never put Nathan's phone number or home address on the site.
 ## Content
 
 - Projects live in `src/content/projects/*.md`. `category` is `pharmacy` or `creative`. `featured: true` pins a project to the top of the home page. The home page shows the first 3 (featured first, then newest).
+- The home page is one long scroll: intro (`#top`), Featured Projects (`#projects`), then the CV: Experience (`#experience`), Education, Certifications, Skills. The CV lives in `src/components/cv/CvSections.astro`; each section uses `src/components/home/Section.astro`. `/cv` redirects to `/#experience`.
+- Sidebar links are `/#top`, `/#projects`, `/#experience` and `/contact`, with ids `nav-*` (never reuse a section id). The highlight follows the section in view.
 - The blog is hidden from the menu until the first real post. Re-add the Blog link in `src/components/SideBarMenu.astro` when publishing one.
 
 ## Design
