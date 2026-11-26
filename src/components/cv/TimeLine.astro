@@ -1,8 +1,8 @@
 ---
 // One CV timeline entry.
-// title: role or degree. subtitle: one detail line (e.g. "Employer | Co-op | City | Dates").
+// Row 1: title (left) and dates (right). Row 2: org · location. Row 3: type (e.g. Co-op), italic.
 // Default slot: what was done. Optional "achievements" slot: shown under a "Key achievements" label.
-const { title, subtitle } = Astro.props;
+const { title, org, dates, location, type } = Astro.props;
 const hasAchievements = Astro.slots.has("achievements");
 ---
 
@@ -11,9 +11,13 @@ const hasAchievements = Astro.slots.has("achievements");
     <span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
     <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]"></span>
   </div>
-  <div class="experience__data bd-grid px-5 pb-2">
-    <h3 class="type-subheading mb-1">{title}</h3>
-    <span class="type-meta">{subtitle}</span>
+  <div class="experience__data bd-grid px-5 pb-2 grow">
+    <div class="flex flex-wrap justify-between gap-x-4">
+      <h3 class="type-subheading mb-1">{title}</h3>
+      <span class="type-meta whitespace-nowrap">{dates}</span>
+    </div>
+    <p class="type-meta">{location ? `${org} · ${location}` : org}</p>
+    {type && <p class="type-meta italic">{type}</p>}
     <div class="my-2">
       <slot />
     </div>
