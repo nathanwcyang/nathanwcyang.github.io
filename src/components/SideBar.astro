@@ -1,6 +1,12 @@
 ---
 import SideBarFooter from "./SideBarFooter.astro";
 import SideBarMenu from "./SideBarMenu.astro";
+import FluidOrb from "./ui/fluid-orb";
+import { createRequire } from "node:module";
+// themes.cjs is CommonJS (Tailwind reads it), so load it with require; runs at build time from the repo root
+const themes = createRequire(process.cwd() + "/")("./src/styles/themes.cjs");
+// The orb always uses the light-theme blue, matching the favicon
+const orbColor = themes["flexoki-light"].primary;
 const { sideBarActiveItemID } = Astro.props;
 ---
 
@@ -10,9 +16,15 @@ const { sideBarActiveItemID } = Astro.props;
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href="/">
         <div class="avatar motion-safe:transition motion-safe:ease-in-out motion-safe:hover:scale-[102%] block m-auto">
-          <div class="w-[8.5rem]">
-            <!-- Photo placeholder: same size and position as the template photo -->
+          <div class="w-[8.5rem] h-[8.5rem] relative">
+            <!-- Flat NY circle underneath: shows if WebGL is unavailable -->
             <img src="/avatar-ny.svg" width="136" height="136" class="w-[8.5rem] h-[8.5rem]" alt="Nathan Yang, home" />
+            <FluidOrb client:load size={136} color={orbColor} hoverSpeed={3} className="!absolute inset-0" aria-hidden="true" />
+            <!-- NY letters from avatar-ny.svg, drawn over the orb -->
+            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full fill-white pointer-events-none" aria-hidden="true">
+              <path transform="translate(20.496 63.910) scale(0.04165 -0.04165)" d="M60.12509965934623 0V668H249.49981880118867L516.1250271798217 174.74958324273393V668H657.2497644415453V0H468.0625498296731L201.2498369210698 493.8129303471769V0Z"/>
+              <path transform="translate(49.940 63.910) scale(0.04165 -0.04165)" d="M252.37493658041603 0V259.8124954700297L0 668H168.81213307240705L324.56229615133725 398.6247010219613L480.12495470029717 668H649.7495832427339L398.3746466623179 260.62499094005943V0Z"/>
+            </svg>
           </div>
         </div>
       </a>

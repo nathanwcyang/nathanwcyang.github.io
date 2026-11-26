@@ -86,7 +86,9 @@ test("home sections in order", () => {
 test("sidebar links", () => {
   for (const page of ["/", "/projects/rxcounsel"]) {
     const h = html(page);
-    const menu = h.slice(h.indexOf('<ul class="menu'), h.indexOf("</ul>", h.indexOf('<ul class="menu')));
+    const start = h.indexOf('data-slot="bounce-sidebar"');
+    assert.ok(start > -1, `${page}: sidebar menu not found`);
+    const menu = h.slice(start, h.indexOf("</ul>", start));
     for (const s of ['href="/#top"', 'href="/#projects"', 'href="/#experience"', 'href="/contact"'])
       assert.ok(menu.includes(s), `${page}: menu missing ${s}`);
     assert.ok(!menu.includes('href="mailto:'), `${page}: menu still has a mailto link`);
