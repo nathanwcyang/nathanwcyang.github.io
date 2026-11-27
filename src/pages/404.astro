@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { buttonVariants } from "@/components/ui/button";
 ---
 
 <BaseLayout title = "404: Not Found" includeSidebar={false}>
@@ -7,6 +8,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="text-9xl mb-4" aria-hidden="true">🏝</div>
     <h1 class="text-9xl font-bold mb-2">404</h1>
     <p class="text-2xl">The page you're looking for couldn't be found.</p>
-    <a class="btn btn-primary mt-9" href="/">Back to home</a>
+    <a class={buttonVariants({ className: "mt-9" })} href="/">Back to home</a>
   </div>
 </BaseLayout>
