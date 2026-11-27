@@ -28,6 +28,12 @@ Titles stand out by **size and weight only**.
 | Divider | Line under project titles | n/a | 2px line, 10% black; see `src/pages/projects/[slug].astro` |
 | Menu, buttons | Navigation | 600 | see `src/components/ui/button.tsx` |
 
+## Wide screens
+
+The root font size is `clamp(100%, 1vw, 200%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem grows with the window, up to 2× at 3200px. So set new widths in rem, not px, or they won't scale with the rest of the page.
+
+Known limit: on a screen wider than 1600px, browser zoom (Cmd +) shrinks the window the page sees, so the scaling backs off by the same amount and text gets no bigger until the zoomed width drops below 1600px. On a 3200px screen, zooming to 200% looks unchanged. A lower cap (say `150%`) gives zoom back sooner but leaves wider margins. The main column is 56.25rem (900px), and 62.5rem (1000px) from 1280px up.
+
 ## Weights and italics
 
 - **400** body, **500** lede, **600** subheadings and labels, **700** titles, headings and `<strong>`.
@@ -47,6 +53,7 @@ Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki li
 | Accent (links, avatar) | `text-primary` | blue-600 | #205EA6 |
 
 - Titles stay near-black. Blue is reserved for links, the avatar and small accents, so it stands out.
+- Raised cards (the home intro, project cards) use `bg-card shadow-card` with `border border-transparent` (so forced-colors mode still draws an edge), 16px corners (`rounded-2xl`), and 12px corners (`rounded-xl`) on images inside. Hover deepens to `shadow-card-hover`.
 - Use shadcn colour names in code (`text-primary`, `bg-muted`), never raw hex values.
 
 ## Changing the colours

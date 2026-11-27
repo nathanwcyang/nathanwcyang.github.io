@@ -59,11 +59,20 @@ import TimeLineElement from "./TimeLine.astro";
 </Section>
 
 <Section id="skills" title="Skills">
-  <ul class="list-disc ml-5 grid gap-2">
-    <li><span class="font-semibold">Pharmacy software:</span> Propel, Kroll, Lexi-Drug, Microsoft Office</li>
-    <li>
-      <span class="font-semibold">Technical &amp; creative:</span> Claude and Copilot agents, React/Tailwind, DaVinci
-      Resolve, audio mixing, photography
-    </li>
-  </ul>
+  {/* Pills follow HyperUI's base badge, mapped to the site's colour tokens. */}
+  <div class="space-y-5">
+    {[
+      ["Pharmacy software", ["Propel", "Kroll", "Lexi-Drug", "Microsoft Office"]],
+      ["Technical & creative", ["Claude and Copilot agents", "React/Tailwind", "DaVinci Resolve", "Audio mixing", "Photography"]],
+    ].map(([group, skills]) => (
+      <div>
+        <h3 class="type-subheading">{group}</h3>
+        <ul class="mt-2 flex flex-wrap gap-2">
+          {(skills as string[]).map((s) => (
+            <li class="rounded-full bg-muted px-2.5 py-0.5 text-sm whitespace-nowrap text-foreground">{s}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
 </Section>
