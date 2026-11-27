@@ -16,7 +16,7 @@ function css() {
 }
 
 test("root font scales past 1600px, never below the visitor's base", () => {
-  assert.match(css(), /html\{[^}]*font-size:clamp\(100%,1vw,200%\)/);
+  assert.match(css(), /html\{[^}]*font-size:clamp\(100%,1vw,125%\)/);
 });
 test("main column cap is in rem and wider from xl", () => {
   const h = html("/");
