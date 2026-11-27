@@ -76,7 +76,7 @@ test("cv profile removed and Relay added", () => {
   ]) assert.ok(h.includes(s), `missing: ${s}`);
   const at = (s) => h.indexOf(s);
   assert.ok(at("Trillium Health Partners") < at("Customer Experience Specialist") && at("Customer Experience Specialist") < at("Collections Specialist"), "Relay not between Trillium and CareRx");
-  assert.equal((h.match(/<h3/g) || []).length, 8, "expected 1 project card + 2 education + 5 job titles");
+  assert.equal((h.match(/<h3/g) || []).length, 10, "expected 1 project card + 2 education + 5 job titles + 2 skill groups");
 });
 
 test("home sections in order", () => {

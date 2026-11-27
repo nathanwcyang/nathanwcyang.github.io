@@ -51,3 +51,11 @@ test("intro photo and project images offer large sources for scaled screens", ()
 test("project cards share the card shadow", () => {
   for (const page of ["/", "/projects"]) assert.ok(html(page).includes("shadow-card"), page);
 });
+
+test("skills render as one pill per skill, in two labelled groups", () => {
+  const h = html("/");
+  const skills = h.slice(h.indexOf('id="skills"'));
+  for (const s of ["Propel", "Kroll", "Lexi-Drug", "Microsoft Office", "Claude and Copilot agents", "React/Tailwind", "DaVinci Resolve", "Audio mixing", "Photography"])
+    assert.match(skills, new RegExp(`<li[^>]*rounded-full[^>]*>${s}</li>`), s);
+  assert.ok(skills.includes("Pharmacy software") && skills.includes("Technical &amp; creative"));
+});
