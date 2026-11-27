@@ -28,6 +28,10 @@ Titles stand out by **size and weight only**.
 | Divider | Line under project titles | n/a | 2px line, 10% black; see `src/pages/projects/[slug].astro` |
 | Menu, buttons | Navigation | 600 | see `src/components/ui/button.tsx` |
 
+## Wide screens
+
+The root font size is `clamp(100%, 1vw, 200%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem grows with the window, like browser zoom, up to 2× at 3200px. So set new widths in rem, not px, or they won't scale with the rest of the page. The main column is 56.25rem (900px), and 62.5rem (1000px) from 1280px up.
+
 ## Weights and italics
 
 - **400** body, **500** lede, **600** subheadings and labels, **700** titles, headings and `<strong>`.

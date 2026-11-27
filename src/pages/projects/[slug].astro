@@ -19,7 +19,7 @@ const { title, description, heroImage, heroAlt, heroCaption, badge } = project.d
 
 <BaseLayout title={title} description={description} image={heroImage?.src} sideBarActiveItemID="projects">
   <div class="md:flex md:justify-center">
-    <article class="prose prose-lg max-w-[750px] prose-img:mx-auto prose-h2:font-bold prose-h3:font-semibold prose-blockquote:italic prose-a:text-primary">
+    <article class="prose prose-lg max-w-[46.875rem] prose-img:mx-auto prose-h2:font-bold prose-h3:font-semibold prose-blockquote:italic prose-a:text-primary">
       <h1 class="title my-2! type-display">{title}</h1>
       {badge && <div class={badgeVariants({ className: "my-1" })}>{badge}</div>}
       <div class={divider}></div>
