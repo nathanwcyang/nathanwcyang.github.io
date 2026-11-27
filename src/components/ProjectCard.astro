@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { badgeVariants } from "@/components/ui/badge";
 
 interface Props {
   title: string;
@@ -14,12 +15,12 @@ const { title, desc, url, img, badge } = Astro.props;
 
 <a
   href={url}
-  class="block rounded-box border border-border bg-background overflow-hidden hover:shadow-lg motion-safe:transition-shadow"
+  class="block rounded-lg border border-border bg-background overflow-hidden hover:shadow-lg motion-safe:transition-shadow"
 >
   {/* The title below names the link, so the image is decorative here. */}
   {img && <Image src={img} alt="" width={750} densities={[1, 2]} format="webp" class="w-full h-auto" />}
   <div class="p-5">
-    <h3 class="type-heading">{title}{badge && <span class="badge badge-secondary mx-2">{badge}</span>}</h3>
+    <h3 class="type-heading">{title}{badge && <span class={badgeVariants({ className: "mx-2" })}>{badge}</span>}</h3>
     <p class="mt-1">{desc}</p>
   </div>
 </a>

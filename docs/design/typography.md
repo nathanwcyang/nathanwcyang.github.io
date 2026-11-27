@@ -12,7 +12,7 @@ Decided against: a serif for titles (two fonts felt busy), Geist ("AI" reads as 
 
 Titles stand out by **size and weight only**.
 
-**Every text size is Tailwind's default + 1pt** (set in `tailwind.config.cjs`). The pixel sizes in the table below are the Tailwind defaults; add 1.33px to each. daisyUI buttons, the footer and project write-ups get the same +1pt in `src/styles/global.css`. Use these classes (defined in `src/styles/global.css`) instead of setting sizes and weights by hand.
+**Every text size is Tailwind's default + 1pt** (set in `tailwind.config.cjs`). The pixel sizes in the table below are the Tailwind defaults; add 1.33px to each. Project write-ups get the same +1pt in `src/styles/global.css`. Use these classes (defined in `src/styles/global.css`) instead of setting sizes and weights by hand.
 
 | **Class** | **Used for** | **Weight** | **Size (phone → desktop)** |
 |---|---|---|---|

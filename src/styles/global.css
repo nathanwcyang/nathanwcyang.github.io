@@ -53,11 +53,8 @@ strong, b {
   --tw-prose-links: rgb(var(--primary));
 }
 
-/* +1pt for text sized by daisyUI and the typography plugin instead of Tailwind classes
-   (buttons, footer, project write-ups). Keeps every size at default + 1pt. */
-.btn:not([class*="text-"]), .footer {
-  font-size: calc(0.875rem + 1pt);
-}
+/* +1pt for text sized by the typography plugin instead of Tailwind classes (project write-ups).
+   Keeps every size at default + 1pt. */
 .prose-lg {
   font-size: calc(1.125rem + 1pt);
 }

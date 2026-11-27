@@ -154,7 +154,7 @@ export function BounceSidebar({
         const id = typeof item === "string" ? undefined : item.id;
         const isActive = index === activeIndex;
         const itemClassName = cn(
-          "flex w-full cursor-pointer items-center rounded-btn px-2 py-3 text-left text-base transition-colors duration-200",
+          "flex w-full cursor-pointer items-center rounded-md px-2 py-3 text-left text-base transition-colors duration-200",
           isActive ? "text-foreground" : "text-[color:var(--nav-muted)] hover:text-foreground",
         );
 

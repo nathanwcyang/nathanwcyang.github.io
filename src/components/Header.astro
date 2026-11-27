@@ -1,17 +1,21 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+---
 <header
   class="sticky lg:hidden top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-background text-foreground shadow-sm"
 >
-  <div class="navbar">
-    <div class="navbar-start">
+  <div class="flex min-h-16 w-full items-center p-2">
+    <div class="inline-flex w-1/2 items-center justify-start">
       <label for="my-drawer" class="btn btn-square btn-ghost menu-toggle" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"
           ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </label>
     </div>
-    <div class="navbar-center">
-      <a class="btn btn-ghost normal-case font-bold text-xl" href="/">Nathan</a>
+    <div class="inline-flex shrink-0 items-center">
+      <a class={cn(buttonVariants({ variant: "ghost" }), "text-xl font-bold")} href="/">Nathan</a>
     </div>
-    <div class="navbar-end"></div>
+    <div class="inline-flex w-1/2 items-center justify-end"></div>
   </div>
 </header>

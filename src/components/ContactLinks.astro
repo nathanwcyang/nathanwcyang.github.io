@@ -1,12 +1,13 @@
 ---
 import { SITE_EMAIL, SITE_LINKEDIN } from "../config";
+import { buttonVariants } from "@/components/ui/button";
 // "buttons": Email me + LinkedIn. "location": pin icon + place (the page supplies the wrapper).
 const { part } = Astro.props;
 ---
 {part === "buttons" && (
   <div class="mt-6 flex flex-wrap gap-3">
-    <a class="btn btn-primary" href={`mailto:${SITE_EMAIL}`}>Email me</a>
-    <a class="btn btn-outline" href={SITE_LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
+    <a class={buttonVariants()} href={`mailto:${SITE_EMAIL}`}>Email me</a>
+    <a class={buttonVariants({ variant: "outline" })} href={SITE_LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
   </div>
 )}
 {part === "location" && (
