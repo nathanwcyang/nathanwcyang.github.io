@@ -33,7 +33,7 @@ export default function NavMenu({ active, className }: { active?: string; classN
       items={LINKS.map(({ name, label, href }) => ({ label, href, id: `nav-${name}` }))}
       value={LINKS.findIndex((l) => l.name === current)}
       onChange={(i) => setCurrent(LINKS[i].name)}
-      dotColor="var(--nav-dot)"
+      dotColor="rgb(var(--nav-dot))"
     />
   );
 }
