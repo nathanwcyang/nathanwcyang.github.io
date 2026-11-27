@@ -38,7 +38,7 @@ const {
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
     </div>
     <script>
-      // Mobile menu: hide the closed menu from keyboard and screen readers, and close it with Escape.
+      // Mobile menu: hide the closed menu, and the page behind the open menu, from keyboard and screen readers; close it with Escape.
       let controller: AbortController | undefined;
       function setupMenu() {
         // Drop the previous run's document and media-query listeners so they don't pile up across page changes
@@ -47,12 +47,14 @@ const {
         const { signal } = controller;
         const toggle = document.getElementById("my-drawer") as HTMLInputElement | null;
         const menu = document.getElementById("site-menu");
+        const page = document.querySelector(".menu-page");
         if (!toggle || !menu) return;
         toggle.setAttribute("aria-controls", "site-menu");
         const wide = window.matchMedia("(min-width: 1024px)");
         const sync = () => {
           const hidden = !wide.matches && !toggle.checked;
           menu.toggleAttribute("inert", hidden);
+          page?.toggleAttribute("inert", !wide.matches && toggle.checked);
           toggle.setAttribute("aria-label", toggle.checked ? "Close menu" : "Open menu");
         };
         // Phone menu: close it when a link is tapped, so the page scrolls into view

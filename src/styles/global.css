@@ -101,7 +101,7 @@
   --secondary: 242 240 229; /* base-50 #F2F0E5 */
   --secondary-foreground: 16 15 15;
   --muted: 242 240 229;
-  --muted-foreground: 111 110 105; /* base-600 #6F6E69 */
+  --muted-foreground: 87 86 83; /* base-700 #575653 */
   --accent: 230 228 217; /* base-100 #E6E4D9 */
   --accent-foreground: 16 15 15;
   --destructive: 175 48 41; /* red-600 #AF3029 */
@@ -222,9 +222,16 @@ strong, b {
     grid-area: 1 / 1;
   }
   .menu-panel > aside {
-    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
     will-change: transform;
     transform: translateX(-100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-panel > aside {
+      transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+  html {
+    scroll-padding-top: 5rem;
   }
   .menu-overlay {
     position: sticky;

@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Swami Malode. MIT + Commons Clause + Attribution licence:
 // https://github.com/swamimalode07/rare-ui/blob/main/LICENSE
 // Local change: `hoverSpeed` prop (the orb eases to that speed while hovered).
+// Local change: the animation stops after 5 seconds (WCAG 2.2.2).
 // Local change: with no `color` prop, the orb reads the site's `--primary` CSS variable.
 import React, { useEffect, useRef } from 'react'
 
@@ -12,6 +13,8 @@ export type FluidOrbProps = React.ComponentProps<'div'> & {
   color?: string
   hoverSpeed?: number
 }
+
+const RUN_MS = 5000 // WCAG 2.2.2: moving content stops within 5 s
 
 const VERT = `
 attribute vec2 a_pos;
@@ -174,6 +177,7 @@ const FluidOrb = ({
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let last = performance.now()
+    const start = last
     let time = 0
     let speed = 1
     let raf = 0
@@ -185,7 +189,7 @@ const FluidOrb = ({
       last = now
       gl.uniform1f(uTime, reduce ? 0 : time)
       gl.drawArrays(gl.TRIANGLES, 0, 6)
-      if (!reduce) raf = requestAnimationFrame(render)
+      if (!reduce && now - start < RUN_MS) raf = requestAnimationFrame(render)
     }
     render(last)
 
