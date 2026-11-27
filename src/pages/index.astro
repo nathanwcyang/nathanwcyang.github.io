@@ -4,7 +4,8 @@ import ProjectCard from "../components/ProjectCard.astro";
 import Section from "../components/home/Section.astro";
 import CvSections from "../components/cv/CvSections.astro";
 import { getSortedProjects } from "../lib/projects";
-import ContactLinks from "../components/ContactLinks.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+import Location from "../components/Location.astro";
 import { SITE_EMAIL } from "../config";
 
 // Featured projects first, then newest. Add a file in src/content/projects/ and it shows up here.
@@ -27,7 +28,7 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
     </div>
     <p class="type-meta flex flex-wrap items-center gap-x-2 gap-y-1 mt-4">
       <span class="inline-flex items-center gap-1">
-        <ContactLinks part="location" />
+        <Location />
       </span>
       <span aria-hidden="true" class="hidden sm:inline">|</span>
       <span class="inline-flex items-center gap-1">
@@ -35,7 +36,7 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
         <a class="no-underline hover:underline" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
       </span>
     </p>
-    <ContactLinks part="buttons" />
+    <ContactButtons />
   </section>
 
   <Section id="projects" title="Featured Projects">
