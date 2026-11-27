@@ -24,7 +24,7 @@ Titles stand out by **size and weight only**.
 | Body text | Paragraphs, bullets | 400 | 16px, relaxed line height |
 | `type-meta` | Dates, captions, CV detail lines | 400 | 14px, 70% opacity |
 | `type-label` | Small section labels ("Key achievements") | 600, uppercase, wide spacing | 12px, 70% opacity |
-| Menu, buttons | Navigation | daisyUI default | daisyUI default |
+| Menu, buttons | Navigation | 600 | see `src/components/ui/button.tsx` |
 
 ## Weights and italics
 
@@ -34,7 +34,7 @@ Titles stand out by **size and weight only**.
 
 ## Colour
 
-Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki light** values (https://stephango.com/flexoki). daisyUI components still read `src/styles/themes.cjs` until they are removed.
+Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki light** values (https://stephango.com/flexoki).
 
 | **Role** | **Class** | **Flexoki colour** | **Hex** |
 |---|---|---|---|
@@ -47,12 +47,8 @@ Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki li
 - Titles stay near-black. Blue is reserved for links, the avatar and small accents, so it stands out.
 - Use shadcn colour names in code (`text-primary`, `bg-muted`), never raw hex values.
 
-## Swapping the theme
+## Changing the colours
 
-1. Open `src/styles/themes.cjs`.
-2. Copy a theme, rename it and change the hex values.
-3. Set `SITE_THEME` in `src/config.ts` to the new name.
-
-`flexoki-dark` is ready to use. A light/dark toggle isn't built yet.
+Edit the RGB channel values in the `:root` block of `src/styles/global.css`. The site is light-only; there is no dark mode.
 
 The avatar and favicon (`public/avatar-ny.svg`, `public/favicon.svg`) have their colours written in. Update those two files by hand if you change the accent colour.

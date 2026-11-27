@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Swami Malode. MIT + Commons Clause + Attribution licence:
 // https://github.com/swamimalode07/rare-ui/blob/main/LICENSE
 // Local change: `hoverSpeed` prop (the orb eases to that speed while hovered).
+// Local change: with no `color` prop, the orb reads the site's `--primary` CSS variable.
 import React, { useEffect, useRef } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -98,6 +99,12 @@ function hexToRgb(hex: string): [number, number, number] {
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
 }
 
+// `--primary` holds "r g b" (0-255); the shader wants 0-1 floats
+function primaryRgb(): [number, number, number] {
+  const [r, g, b] = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim().split(/\s+/).map((n) => Number(n) / 255)
+  return [r, g, b]
+}
+
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const shader = gl.createShader(type)
   if (!shader) return null
@@ -113,7 +120,7 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
 
 const FluidOrb = ({
   size = 240,
-  color = '#1A73F2',
+  color,
   hoverSpeed = 1,
   className,
   style,
@@ -156,7 +163,7 @@ const FluidOrb = ({
 
     const uResolution = gl.getUniformLocation(program, 'u_resolution')
     const uTime = gl.getUniformLocation(program, 'u_time')
-    gl.uniform3f(gl.getUniformLocation(program, 'u_color'), ...hexToRgb(color))
+    gl.uniform3f(gl.getUniformLocation(program, 'u_color'), ...(color ? hexToRgb(color) : primaryRgb()))
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const px = Math.round(size * dpr)

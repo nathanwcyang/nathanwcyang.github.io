@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const themes = require("./src/styles/themes.cjs");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 // Every text size is Tailwind's default + 1pt (1pt = 1/12rem), keeping the same
@@ -64,10 +63,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
-  daisyui: {
-    // Each theme in src/styles/themes.cjs becomes a data-theme name.
-    themes: Object.entries(themes).map(([name, colors]) => ({ [name]: colors })),
-    logs: false,
-  },
+  plugins: [require("@tailwindcss/typography")],
 };
