@@ -65,3 +65,9 @@ test("sidebar icons are sized in rem so they scale with the page", () => {
   assert.ok(!/<svg[^>]*width="24"/.test(footer.slice(0, 2000)), "sidebar icons still fixed at 24px");
   assert.equal((footer.slice(0, 2000).match(/<svg[^>]*class="size-6"/g) || []).length, 2);
 });
+test("avatar orb fills its rem-sized frame instead of a fixed 136px", () => {
+  const orb = html("/").match(/data-slot="fluid-orb"[^>]*/)?.[0] ?? "";
+  assert.ok(orb, "orb not rendered");
+  assert.ok(!orb.includes("width:136px"), "orb still fixed at 136px");
+  assert.match(orb, /width:100%;height:100%/);
+});

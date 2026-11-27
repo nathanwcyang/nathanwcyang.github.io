@@ -30,7 +30,9 @@ Titles stand out by **size and weight only**.
 
 ## Wide screens
 
-The root font size is `clamp(100%, 1vw, 200%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem grows with the window, like browser zoom, up to 2× at 3200px. So set new widths in rem, not px, or they won't scale with the rest of the page. The main column is 56.25rem (900px), and 62.5rem (1000px) from 1280px up.
+The root font size is `clamp(100%, 1vw, 200%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem grows with the window, up to 2× at 3200px. So set new widths in rem, not px, or they won't scale with the rest of the page.
+
+Known limit: on a screen wider than 1600px, browser zoom (Cmd +) shrinks the window the page sees, so the scaling backs off by the same amount and text gets no bigger until the zoomed width drops below 1600px. On a 3200px screen, zooming to 200% looks unchanged. A lower cap (say `150%`) gives zoom back sooner but leaves wider margins. The main column is 56.25rem (900px), and 62.5rem (1000px) from 1280px up.
 
 ## Weights and italics
 
