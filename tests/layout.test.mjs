@@ -59,3 +59,9 @@ test("skills render as one pill per skill, in two labelled groups", () => {
     assert.match(skills, new RegExp(`<li[^>]*rounded-full[^>]*>${s}</li>`), s);
   assert.ok(skills.includes("Pharmacy software") && skills.includes("Technical &amp; creative"));
 });
+test("sidebar icons are sized in rem so they scale with the page", () => {
+  const h = html("/");
+  const footer = h.slice(h.indexOf("social-icons"));
+  assert.ok(!/<svg[^>]*width="24"/.test(footer.slice(0, 2000)), "sidebar icons still fixed at 24px");
+  assert.equal((footer.slice(0, 2000).match(/<svg[^>]*class="size-6"/g) || []).length, 2);
+});
