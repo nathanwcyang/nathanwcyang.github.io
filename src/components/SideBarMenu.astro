@@ -4,9 +4,9 @@ const { sideBarActiveItemID } = Astro.props;
 ---
 
 <!-- Links live in NavMenu.tsx; the bouncing dot marks the current one -->
-<div data-nav-active={sideBarActiveItemID} class="contents">
+<nav aria-label="Main" data-nav-active={sideBarActiveItemID} class="contents">
   <NavMenu client:load active={sideBarActiveItemID} className="grow shrink overflow-y-auto p-2 pl-6" />
-</div>
+</nav>
 
 <script>
 // Runs on first load and after every view-transition navigation (astro:page-load),

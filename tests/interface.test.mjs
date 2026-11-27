@@ -29,3 +29,14 @@ test("focus clears the sticky phone header", () => {
   assert.ok(!html("/").includes("scroll-mt-20"), "scroll-mt-20 still on sections");
   assert.ok(html("/").includes("lg:scroll-mt-6"), "desktop scroll margin removed");
 });
+
+test("sidebar links sit in a nav landmark", () => {
+  for (const page of ["/", "/contact", "/projects"])
+    assert.match(html(page), /<nav aria-label="Main"[^>]*>[\s\S]*data-slot="bounce-sidebar"/, `${page}: no nav landmark`);
+});
+test("404 menu button opens a real menu", () => {
+  const h = readFileSync(new URL("../dist/404.html", import.meta.url), "utf8");
+  assert.ok(h.includes('id="site-menu"'), "404 has a menu toggle but no menu");
+  const ids = [...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(ids.filter((id, i) => ids.indexOf(id) !== i), [], "duplicate ids on 404");
+});
