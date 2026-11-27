@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Swami Malode. MIT + Commons Clause + Attribution licence:
 // https://github.com/swamimalode07/rare-ui/blob/main/LICENSE
 // Local changes for this Astro site: plain <a> instead of next/link, an `id` per item,
-// theme colours and menu sizing, and no bounce for reduce-motion users.
+// theme colours and menu sizing, no bounce for reduce-motion users, and a required dot colour.
 
 import { useEffect, useLayoutEffect, useRef, useState, type ComponentProps } from "react";
 import { motion, useAnimate, useReducedMotion } from "motion/react";
@@ -24,7 +24,7 @@ export type BounceSidebarProps = Omit<ComponentProps<"ul">, "onChange"> & {
   value?: number;
   defaultValue?: number;
   onChange?: (index: number) => void;
-  dotColor?: string;
+  dotColor: string;
 };
 
 export function BounceSidebar({
@@ -32,7 +32,7 @@ export function BounceSidebar({
   value,
   defaultValue = 0,
   onChange,
-  dotColor = "#FC4C01",
+  dotColor,
   className,
   ...props
 }: BounceSidebarProps) {

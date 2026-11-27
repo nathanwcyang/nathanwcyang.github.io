@@ -24,6 +24,8 @@ Titles stand out by **size and weight only**.
 | Body text | Paragraphs, bullets | 400 | 16px, relaxed line height |
 | `type-meta` | Dates, captions, CV detail lines | 400 | 14px, 70% opacity |
 | `type-label` | Small section labels ("Key achievements") | 600, uppercase, wide spacing | 12px, 70% opacity |
+| Badge | Project tag next to a title | 400 | 14px, cream on black; see `src/components/ui/badge.tsx` |
+| Divider | Line under project titles | n/a | 2px line, 10% black; see `src/pages/projects/[slug].astro` |
 | Menu, buttons | Navigation | 600 | see `src/components/ui/button.tsx` |
 
 ## Weights and italics
