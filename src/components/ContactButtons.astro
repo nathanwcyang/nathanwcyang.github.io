@@ -3,6 +3,13 @@ import { SITE_EMAIL, SITE_LINKEDIN } from "../config";
 import { buttonVariants } from "@/components/ui/button";
 ---
 <div class="mt-6 flex flex-wrap gap-3">
-  <a class={buttonVariants()} href={`mailto:${SITE_EMAIL}`}>Email me</a>
-  <a class={buttonVariants({ variant: "outline" })} href={SITE_LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
+  <a class={buttonVariants()} href={`mailto:${SITE_EMAIL}`}>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4 fill-current"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.51l-8 6.22-8-6.22V6h16zM4 18V9.04l7.39 5.75a1 1 0 0 0 1.22 0L20 9.04V18H4z"/></svg>
+    Email me
+  </a>
+  <a class={buttonVariants({ variant: "outline" })} href={SITE_LINKEDIN} target="_blank" rel="noopener">
+    <!-- LinkedIn logo from Simple Icons (CC0) -->
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4 fill-current"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    LinkedIn
+  </a>
 </div>
