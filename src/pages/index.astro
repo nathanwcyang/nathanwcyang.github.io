@@ -16,15 +16,15 @@ const featured_projects = (await getSortedProjects()).slice(0, 3);
 
 <BaseLayout sideBarActiveItemID="home">
   <!-- Layout adapted from HyperUI's Portfolio "About" section (MIT): photo column + text column, stacked on phones. -->
-  <section data-home class="pb-12 mt-5 grid gap-8 md:grid-cols-[minmax(0,2fr)_3fr] md:items-start md:gap-10">
+  <section data-home class="mb-12 mt-5 grid gap-8 md:grid-cols-[minmax(0,2fr)_3fr] md:items-start md:gap-10 bg-card border border-transparent shadow-card rounded-2xl p-5 md:p-8">
     <Image
       src={headshot}
       alt="Nathan Yang in his University of Waterloo graduation gown"
-      width={480}
-      densities={[1, 2]}
+      widths={[320, 640, 960]}
+      sizes="(min-width: 768px) 30vw, 10rem"
       format="webp"
       loading="eager"
-      class="w-40 md:w-full aspect-square object-cover object-[center_25%] rounded-xl"
+      class="w-40 md:w-full aspect-square object-cover object-[center_25%] rounded-xl outline outline-1 -outline-offset-1 outline-black/10"
     />
     <div>
     <h1 class="type-display">Nathan Yang</h1>

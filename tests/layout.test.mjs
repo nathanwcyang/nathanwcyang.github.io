@@ -31,3 +31,23 @@ test("timeline line is centred under the dot, not offset in px", () => {
   assert.ok(!h.includes("translate-x-[7px]"));
   assert.match(h, /education__line[^"]*mx-auto/);
 });
+
+test("card shadow tokens exist", () => {
+  const c = css();
+  assert.match(c, /--shadow-card:/);
+  assert.match(c, /--shadow-card-hover:/);
+});
+test("intro is a raised card with a forced-colors edge", () => {
+  const h = html("/");
+  assert.match(h, /data-home[^>]*class="[^"]*shadow-card[^"]*"|class="[^"]*shadow-card[^"]*"[^>]*data-home/);
+  assert.match(h, /data-home[^>]*border-transparent|border-transparent[^>]*data-home/);
+});
+test("intro photo and project images offer large sources for scaled screens", () => {
+  const h = html("/");
+  // The photo file is 912px wide; Astro serves it full size rather than enlarging it to 960w.
+  assert.match(h, /srcset="[^"]*nathan-yang[^"]*912w/, "intro photo has no full-size source");
+  assert.match(h, /srcset="[^"]*1500w/, "project image has no 1500w source");
+});
+test("project cards share the card shadow", () => {
+  for (const page of ["/", "/projects"]) assert.ok(html(page).includes("shadow-card"), page);
+});

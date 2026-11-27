@@ -51,6 +51,7 @@ Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki li
 | Accent (links, avatar) | `text-primary` | blue-600 | #205EA6 |
 
 - Titles stay near-black. Blue is reserved for links, the avatar and small accents, so it stands out.
+- Raised cards (the home intro, project cards) use `bg-card shadow-card` with `border border-transparent` (so forced-colors mode still draws an edge), 16px corners (`rounded-2xl`), and 12px corners (`rounded-xl`) on images inside. Hover deepens to `shadow-card-hover`.
 - Use shadcn colour names in code (`text-primary`, `bg-muted`), never raw hex values.
 
 ## Changing the colours
