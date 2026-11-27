@@ -120,8 +120,8 @@
 html {
   @apply font-sans antialiased bg-background text-foreground;
   color-scheme: light;
-  /* Wide screens: past 1600px the whole rem-sized page grows with the viewport, up to 2x at 3200px. */
-  font-size: clamp(100%, 1vw, 200%);
+  /* Wide screens: past 1600px the whole rem-sized page grows with the viewport, up to 1.25x at 2000px. */
+  font-size: clamp(100%, 1vw, 125%);
 }
 @media (prefers-reduced-motion: no-preference) {
   html {
