@@ -7,14 +7,14 @@ const { sideBarActiveItemID } = Astro.props;
 
 <div class="menu-panel z-40" id="site-menu">
   <label for="my-drawer" class="menu-overlay"></label>
-  <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-muted text-foreground flex flex-col">
+  <aside class="px-2 pt-2 h-auto min-h-full w-76 bg-muted text-foreground flex flex-col">
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href="/">
         <div class="relative [&>div]:aspect-square [&>div]:overflow-hidden motion-safe:transition motion-safe:ease-in-out motion-safe:hover:scale-[102%] block m-auto">
-          <div class="w-[8.5rem] h-[8.5rem] relative">
+          <div class="w-34 h-34 relative">
             <!-- Flat NY circle underneath: shows if WebGL is unavailable -->
-            <img src="/avatar-ny.svg" width="136" height="136" class="w-[8.5rem] h-[8.5rem]" alt="Nathan Yang, home" />
-            <FluidOrb client:load size={136} hoverSpeed={3} className="!absolute inset-0" aria-hidden="true" />
+            <img src="/avatar-ny.svg" width="136" height="136" class="w-34 h-34" alt="Nathan Yang, home" />
+            <FluidOrb client:load size={136} hoverSpeed={3} className="absolute! inset-0" aria-hidden="true" />
             <!-- NY letters from avatar-ny.svg, drawn over the orb -->
             <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full fill-white pointer-events-none" aria-hidden="true">
               <path transform="translate(20.496 63.910) scale(0.04165 -0.04165)" d="M60.12509965934623 0V668H249.49981880118867L516.1250271798217 174.74958324273393V668H657.2497644415453V0H468.0625498296731L201.2498369210698 493.8129303471769V0Z"/>

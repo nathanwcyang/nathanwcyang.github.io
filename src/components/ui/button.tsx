@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "border-primary bg-primary text-primary-foreground shadow-sm hover:border-[color-mix(in_oklab,rgb(var(--primary)),black_10%)] hover:bg-[color-mix(in_oklab,rgb(var(--primary)),black_10%)]",
+          "border-primary bg-primary text-primary-foreground shadow-xs hover:border-[color-mix(in_oklab,rgb(var(--primary)),black_10%)] hover:bg-[color-mix(in_oklab,rgb(var(--primary)),black_10%)]",
         outline:
           "border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background",
         ghost:
