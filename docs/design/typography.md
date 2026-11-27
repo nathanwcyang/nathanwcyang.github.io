@@ -34,18 +34,18 @@ Titles stand out by **size and weight only**.
 
 ## Colour
 
-Colours come from the active theme in `src/styles/themes.cjs`. Default: **Flexoki light** (https://stephango.com/flexoki).
+Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki light** values (https://stephango.com/flexoki). daisyUI components still read `src/styles/themes.cjs` until they are removed.
 
-| **Role** | **Flexoki colour** | **Hex** |
-|---|---|---|
-| Page background | paper | #FFFCF0 |
-| Sidebar / card background | base-50 | #F2F0E5 |
-| Borders / active menu | base-100 | #E6E4D9 |
-| Text and titles | black | #100F0F |
-| Accent (links, avatar) | blue-600 | #205EA6 |
+| **Role** | **Class** | **Flexoki colour** | **Hex** |
+|---|---|---|---|
+| Page background | `bg-background` | paper | #FFFCF0 |
+| Sidebar / card background | `bg-muted` | base-50 | #F2F0E5 |
+| Borders / active menu | `border-border` | base-100 | #E6E4D9 |
+| Text and titles | `text-foreground` | black | #100F0F |
+| Accent (links, avatar) | `text-primary` | blue-600 | #205EA6 |
 
 - Titles stay near-black. Blue is reserved for links, the avatar and small accents, so it stands out.
-- Use theme names in code (`text-primary`, `bg-base-200`), never raw hex values. That keeps themes swappable.
+- Use shadcn colour names in code (`text-primary`, `bg-muted`), never raw hex values.
 
 ## Swapping the theme
 
