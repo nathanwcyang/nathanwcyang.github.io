@@ -62,3 +62,106 @@
   --tw-prose-links: var(--color-text-accent);
   --tw-prose-captions: var(--color-text-secondary);
 }
+
+/* Top bar (src/components/ui/TopBar.tsx): one frosted pill. At the top its glass stretches left over the
+   section links; on the home page, scrolling down slides the glass's left edge in to wrap the page links
+   + LinkedIn while the sections dissolve along it. Script in BaseLayout.astro sets data-home,
+   data-floating and --links-w. Prototype and motion plans: branch prototype/morphing-navbar. */
+@layer components {
+  [data-morph] {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  /* The header lets clicks through; only the pill, the links and the phone menu take them */
+  [data-morph] :is([data-section-links], [data-pill], [popover]) {
+    pointer-events: auto;
+  }
+  /* The pill paints after the section links, so lift them above its stretched glass */
+  [data-section-links] {
+    position: relative;
+    z-index: 1;
+    transition: visibility 0s;
+  }
+  [data-section-links] > * {
+    transition: opacity 200ms var(--ease-out);
+  }
+  [data-pill] {
+    position: relative;
+    isolation: isolate;
+  }
+  /* The glass is a layer, so its edge can move without moving the buttons. No ancestor may get a filter,
+     backdrop-filter, opacity < 1, clip-path or mask: that would stop this blur from reaching the page. */
+  [data-pill]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: calc(-1 * var(--links-w, 0px));
+    z-index: -1;
+    border: 1px solid color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--color-background-body) 74%, transparent);
+    -webkit-backdrop-filter: saturate(170%) blur(16px);
+    backdrop-filter: saturate(170%) blur(16px);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 56%, transparent) inset,
+      0 14px 40px -20px color-mix(in srgb, var(--color-text-primary) 45%, transparent);
+  }
+  [data-morph][data-floating][data-home] [data-pill]::before {
+    left: 0;
+  }
+  [data-morph][data-floating][data-home] [data-section-links] {
+    /* visibility waits for the last link's fade (70ms delay + 200ms), then takes them out of the Tab order */
+    visibility: hidden;
+    transition: visibility 0s 270ms;
+  }
+  [data-morph][data-floating][data-home] [data-section-links] > * {
+    opacity: 0;
+  }
+
+  /* Hover underline on the text links */
+  [data-morph] :is([data-section-links], [data-projects]) a {
+    position: relative;
+  }
+  [data-morph] :is([data-section-links], [data-projects]) a::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0.75rem;
+    bottom: 0.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    [data-morph] :is([data-section-links], [data-projects]) a:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Movement only without reduced motion; with it, the sections just fade and the glass snaps */
+  @media (prefers-reduced-motion: no-preference) {
+    /* `left` is a layout property, but on an empty, absolutely positioned layer it re-lays out only that box.
+       Same curve as the links: the edge is the lead and the links ride on it. */
+    [data-pill]::before {
+      transition: left 300ms var(--ease-out);
+    }
+    [data-morph] :is([data-section-links], [data-projects]) a::after {
+      transition: transform 200ms var(--ease-out);
+    }
+    [data-section-links] > * {
+      transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), filter 200ms var(--ease-out);
+    }
+    /* Growing back, the edge passes Skills first: right to left */
+    [data-section-links] > :nth-child(1) { transition-delay: 70ms; }
+    [data-section-links] > :nth-child(2) { transition-delay: 40ms; }
+    [data-section-links] > :nth-child(3) { transition-delay: 0ms; }
+    /* Shrinking, the edge passes Experience first: left to right, each link dissolving toward the pill */
+    [data-morph][data-floating][data-home] [data-section-links] > * {
+      transform: translateX(0.5rem);
+      filter: blur(2px);
+    }
+    [data-morph][data-floating][data-home] [data-section-links] > :nth-child(1) { transition-delay: 0ms; }
+    [data-morph][data-floating][data-home] [data-section-links] > :nth-child(2) { transition-delay: 40ms; }
+    [data-morph][data-floating][data-home] [data-section-links] > :nth-child(3) { transition-delay: 70ms; }
+  }
+}

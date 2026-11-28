@@ -99,12 +99,12 @@ test("skills: one pill per skill, in two labelled groups", () => {
     assert.ok(h.includes(`>${s}<`), `pill: ${s}`);
 });
 
-test("top bar links to every home section and the projects page", () => {
+test("top bar links to every home section, the projects page and LinkedIn", () => {
   for (const page of ["/", "/projects", "/projects/rxcounsel"]) {
     const h = html(page);
     const nav = h.slice(h.search(/<nav[^>]*aria-label="Main"/), h.indexOf("</nav>", h.search(/<nav[^>]*aria-label="Main"/)));
     assert.ok(nav.length > 0, `${page}: no main nav`);
-    for (const s of ['href="/#top"', 'href="/#experience"', 'href="/#education"', 'href="/#skills"', 'href="/projects"'])
+    for (const s of ['href="/#experience"', 'href="/#education"', 'href="/#skills"', 'href="/projects"', 'href="https://www.linkedin.com/in/nathanwcyang/"'])
       assert.ok(nav.includes(s), `${page}: nav missing ${s}`);
     assert.ok(!h.includes("bounce-sidebar") && !h.includes("fluid-orb"), `${page}: old sidebar or orb`);
     assert.match(h, /<button[^>]*popovertarget="site-menu"/i, `${page}: no phone menu button`);

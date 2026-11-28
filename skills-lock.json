@@ -232,6 +232,13 @@
       "skillPath": "skills/review-animations/SKILL.md",
       "computedHash": "50f1de2394b88bb3433eca1e30da6866a4e310963d872a66af20ca77fd77f07d"
     },
+    "setup-matt-pocock-skills": {
+      "source": "mattpocock/skills",
+      "commit": "bbadaa631c37af594e5a05c9cefacd9956136b18",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+      "computedHash": "9659e7025d4cf1c0a0b40ddff32ed4b8debb87a4b20d7a52ff89c506a638df69"
+    },
     "state-machine": {
       "source": "jakubkrehel/skills",
       "commit": "672ae44ace6aaed65b86cbb1e2fd6fbea0e79578",
