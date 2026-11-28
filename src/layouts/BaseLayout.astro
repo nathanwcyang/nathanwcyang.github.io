@@ -22,8 +22,9 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, ogType, curre
   </head>
   <body data-astryx-theme="ayu">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-2">Skip to content</a>
-    <header class="sticky top-0 z-40 border-b border-border bg-body/90 backdrop-blur">
-      <div class="mx-auto max-w-5xl px-2 sm:px-4">
+    <div data-progress aria-hidden="true" class="fixed inset-x-0 top-0 z-50 h-0.5 origin-left scale-x-0 bg-accent"></div>
+    <header data-morph data-variant="F" class="sticky top-0 z-40">
+      <div data-shell class="mx-auto max-w-5xl px-2 sm:px-4">
         <TopBar current={current} />
       </div>
     </header>
@@ -31,11 +32,212 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, ogType, curre
       <slot />
     </main>
     <Footer />
+    {/* PROTOTYPE: variant switcher, dev server only */}
+    {import.meta.env.DEV && (
+      <nav data-switcher aria-label="Prototype variants" class="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full px-4 py-2 text-sm text-white shadow-lg" style="background:#111">
+        <button type="button" data-prev aria-label="Previous variant">←</button>
+        <span data-label></span>
+        <button type="button" data-next aria-label="Next variant">→</button>
+      </nav>
+    )}
     <script>
       // Phone menu: close the popover when a link in it is tapped, so the page scrolls into view
       document.getElementById("site-menu")?.addEventListener("click", (e) => {
         if ((e.target as Element).closest("a")) (e.currentTarget as HTMLElement).hidePopover();
       });
+
+      // PROTOTYPE: the morph. Sets data-floating on the header; CSS below does the rest.
+      // ?variant=A static, C float only, D corner pill, E corner chips, F shrinking pill. (B was cut in the animation review.)
+      // D, E and F collapse only on the home page, where Experience/Education/Skills are sections you can scroll to.
+      const VARIANTS = { A: "Static", C: "Float only", D: "Corner pill", E: "Corner chips", F: "Shrinking pill" } as const;
+      type V = keyof typeof VARIANTS;
+      const header = document.querySelector<HTMLElement>("[data-morph]")!;
+      const bar = document.querySelector<HTMLElement>("[data-progress]")!;
+      header.toggleAttribute("data-home", location.pathname === "/");
+      // D's sweep ends at the pill's right edge, not the window's (wide screens put 600px+ between them)
+      const pill = header.querySelector<HTMLElement>("[data-pill]")!;
+      // F's big pill: how far its glass reaches left past the small pill to cover the section links (0 on phones, where they're hidden)
+      const sectionLinks = header.querySelector<HTMLElement>("[data-section-links]")!;
+      const measure = () => {
+        const p = pill.getBoundingClientRect();
+        const s = sectionLinks.getBoundingClientRect();
+        header.style.setProperty("--pill-end", `${innerWidth - p.right}px`);
+        header.style.setProperty("--links-w", `${s.width ? p.left - s.left : 0}px`);
+      };
+      measure();
+      addEventListener("resize", measure);
+      document.fonts.ready.then(measure);
+      const keys = Object.keys(VARIANTS) as V[];
+      const fromUrl = new URLSearchParams(location.search).get("variant") as V;
+      let variant: V = keys.includes(fromUrl) ? fromUrl : "F";
+
+      const setVariant = (v: V) => {
+        variant = v;
+        header.dataset.variant = v;
+        const label = document.querySelector("[data-switcher] [data-label]");
+        if (label) label.textContent = `${v} (${VARIANTS[v]})`;
+        const url = new URL(location.href);
+        url.searchParams.set("variant", v);
+        history.replaceState(null, "", url);
+      };
+      const step = (d: number) => setVariant(keys[(keys.indexOf(variant) + d + keys.length) % keys.length]);
+      document.querySelector("[data-switcher] [data-prev]")?.addEventListener("click", () => step(-1));
+      document.querySelector("[data-switcher] [data-next]")?.addEventListener("click", () => step(1));
+      addEventListener("keydown", (e) => {
+        if ((e.target as Element).closest("input, textarea, [contenteditable]")) return;
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+      setVariant(variant);
+
+      let frame = 0;
+      const update = () => {
+        const y = scrollY;
+        // Hysteresis: float past 24px, settle only under 8px, so a resting trackpad or iOS bounce can't flicker it
+        if (y > 24) header.setAttribute("data-floating", "");
+        else if (y < 8) header.removeAttribute("data-floating");
+
+        const max = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+        frame = 0;
+      };
+      addEventListener("scroll", () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+      update();
     </script>
+    <style is:global>
+      /* PROTOTYPE: morph styles. Unlayered, so they beat the Tailwind utilities. Plans: plans/001-004. */
+      [data-morph] {
+        --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+        pointer-events: none;
+      }
+      /* The bar's surface lives on ::before. The <header> itself must never get a filter, opacity, clip or
+         backdrop-filter: that makes it a backdrop root and stops the pill's blur reaching the page. */
+      [data-morph]::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: color-mix(in srgb, var(--color-background-body) 90%, transparent);
+        border-bottom: 1px solid var(--color-border);
+        -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+        clip-path: inset(0 0 0 0);
+        transition: opacity 200ms var(--ease-out);
+      }
+      /* Colour fades stay on under reduced motion; only movement is behind no-preference (bottom). */
+      [data-shell], [data-projects] a {
+        /* Same filter list as the floating state, so the blur fades in instead of snapping */
+        -webkit-backdrop-filter: saturate(100%) blur(0px); backdrop-filter: saturate(100%) blur(0px);
+        transition: background-color 200ms var(--ease-out), border-color 200ms var(--ease-out),
+          box-shadow 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out);
+      }
+      [data-shell] { pointer-events: auto; border: 1px solid transparent; border-radius: 1.25rem; }
+      /* D's corner pill: the glass is a ::before so it can scale without scaling the buttons */
+      [data-pill] { position: relative; isolation: isolate; }
+      [data-pill]::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        border: 1px solid transparent; border-radius: inherit; opacity: 0; transform-origin: right center;
+        -webkit-backdrop-filter: saturate(100%) blur(0px); backdrop-filter: saturate(100%) blur(0px);
+        transition: opacity 200ms var(--ease-out), background-color 200ms var(--ease-out), border-color 200ms var(--ease-out),
+          box-shadow 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out);
+      }
+      [data-section-links] { transition: visibility 0s; }
+      [data-section-links] > * { transition: opacity 200ms var(--ease-out); }
+
+      /* Hover underline on the text links */
+      :is([data-section-links], [data-projects]) a { position: relative; }
+      :is([data-section-links], [data-projects]) a::after {
+        content: ""; position: absolute; inset-inline: 0.75rem; bottom: 0.25rem; height: 2px; border-radius: 2px;
+        background: var(--color-accent); transform: scaleX(0); transform-origin: 0 50%;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        :is([data-section-links], [data-projects]) a:hover::after { transform: scaleX(1); }
+      }
+
+      /* Every floating variant: the bar's surface goes (D-home sweeps it instead, below), the shell drops 12px */
+      [data-morph][data-floating]:not([data-variant="A"])::before { opacity: 0; }
+      [data-morph][data-floating]:not([data-variant="A"]) [data-shell] { transform: translateY(0.75rem); }
+
+      /* The frosted glass, shared by C's full bar and D's corner pill */
+      [data-morph][data-floating]:is([data-variant="C"], [data-variant="D"]:not([data-home]), [data-variant="E"]:not([data-home])) [data-shell],
+      [data-morph][data-floating][data-home][data-variant="D"] [data-pill]::before,
+      [data-morph][data-variant="F"] [data-pill]::before {
+        border-color: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+        background: color-mix(in srgb, var(--color-background-body) 74%, transparent);
+        -webkit-backdrop-filter: saturate(170%) blur(16px); backdrop-filter: saturate(170%) blur(16px);
+        box-shadow: 0 1px 0 color-mix(in srgb, white 56%, transparent) inset,
+          0 14px 40px -20px color-mix(in srgb, var(--color-text-primary) 45%, transparent);
+      }
+      [data-morph][data-floating][data-home][data-variant="D"] [data-pill]::before { opacity: 1; }
+
+      /* D and E on the home page: the three section links go, only Projects + LinkedIn stay */
+      /* A parent's backdrop-filter (even blur(0)) stops a child's blur from reaching the page, so the shell drops its own */
+      [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-shell] {
+        -webkit-backdrop-filter: none; backdrop-filter: none; pointer-events: none;
+      }
+      [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-pill] { pointer-events: auto; }
+      [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] {
+        /* visibility waits for the last link's fade (70ms delay + 200ms), then takes them out of the Tab order */
+        visibility: hidden; transition: visibility 0s 270ms;
+      }
+      [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] > * { opacity: 0; }
+      /* E: no pill; Projects becomes a chip like the LinkedIn button (ring via box-shadow, so no layout shift) */
+      [data-morph][data-floating][data-home][data-variant="E"] [data-projects] a {
+        background: var(--color-background-card);
+        -webkit-backdrop-filter: saturate(170%) blur(16px); backdrop-filter: saturate(170%) blur(16px);
+        box-shadow: inset 0 0 0 1px var(--color-border), 0 10px 24px -16px color-mix(in srgb, var(--color-text-primary) 45%, transparent);
+      }
+      [data-morph][data-floating][data-home][data-variant="E"] [data-nav-cta] {
+        box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--color-text-primary) 45%, transparent);
+      }
+
+      /* F: one pill from the start. At the top its glass stretches left over all five items; on the home page,
+         scrolling slides the glass's left edge back to wrap just Projects + LinkedIn. No full-width bar. */
+      [data-morph][data-variant="F"]::before { opacity: 0; }
+      [data-morph][data-variant="F"] [data-shell] {
+        transform: translateY(0.75rem); pointer-events: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+      }
+      [data-morph][data-variant="F"] :is([data-section-links], [data-pill]) { pointer-events: auto; }
+      /* The pill paints after the links, so lift the links above the stretched glass */
+      [data-morph][data-variant="F"] [data-section-links] { position: relative; z-index: 1; }
+      [data-morph][data-variant="F"] [data-pill]::before { opacity: 1; transform: none; left: calc(-1 * var(--links-w, 0px)); }
+      [data-morph][data-variant="F"][data-floating][data-home] [data-pill]::before { left: 0; }
+
+      @media (prefers-reduced-motion: no-preference) {
+        [data-shell] {
+          transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out), border-color 200ms var(--ease-out),
+            box-shadow 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out);
+        }
+        :is([data-section-links], [data-projects]) a::after { transition: transform 200ms var(--ease-out); }
+
+        /* 001: in D-home the bar doesn't fade, its surface retracts rightward into the pill (and grows back) */
+        [data-morph]::before { transition: opacity 200ms var(--ease-out), clip-path 300ms var(--ease-in-out); }
+        [data-morph][data-floating][data-home][data-variant="D"]::before { opacity: 1; clip-path: inset(0 var(--pill-end, 0px) 0 calc(100% - var(--pill-end, 0px))); }
+
+        /* 002: the pill's glass grows out of the corner as it frosts in */
+        [data-pill]::before {
+          transform: scale(0.96);
+          transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), background-color 200ms var(--ease-out),
+            border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out);
+        }
+        [data-morph][data-floating][data-home][data-variant="D"] [data-pill]::before { transform: scale(1); }
+        /* F: `left` is a layout property, but on an empty, absolutely positioned layer it re-lays out only that box */
+        /* Same curve as the links: the glass edge is the lead and the links ride on it. With ease-in-out the
+           edge lagged, leaving an empty shadowed pill on collapse and links outside the pill on expand. */
+        [data-morph][data-variant="F"] [data-pill]::before { transform: none; transition: left 300ms var(--ease-out), opacity 200ms var(--ease-out); }
+
+        /* 003: links dissolve toward the pill as the strip's edge passes them (left to right),
+           and come back as it grows back (right to left) */
+        [data-section-links] > * {
+          transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), filter 200ms var(--ease-out);
+        }
+        [data-section-links] > :nth-child(1) { transition-delay: 70ms; }
+        [data-section-links] > :nth-child(2) { transition-delay: 40ms; }
+        [data-section-links] > :nth-child(3) { transition-delay: 0ms; }
+        [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] > * {
+          transform: translateX(0.5rem); filter: blur(2px);
+        }
+        [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] > :nth-child(1) { transition-delay: 0ms; }
+        [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] > :nth-child(2) { transition-delay: 40ms; }
+        [data-morph][data-floating][data-home]:is([data-variant="D"], [data-variant="E"], [data-variant="F"]) [data-section-links] > :nth-child(3) { transition-delay: 70ms; }
+      }
+    </style>
   </body>
 </html>
