@@ -29,7 +29,7 @@ export function TopBar({ current }: { current?: string }) {
             type="button"
             popoverTarget="site-menu"
             aria-label="Menu"
-            className="sm:hidden inline-flex size-10 items-center justify-center rounded-md text-primary hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+            className="sm:hidden inline-flex size-10 items-center justify-center rounded-md text-primary hover:bg-muted"
           >
             <Icon icon="menu" size="md" />
           </button>
@@ -43,7 +43,7 @@ export function TopBar({ current }: { current?: string }) {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="block rounded-md px-3 py-2 text-primary hover:bg-muted focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                    className="block rounded-md px-3 py-2 text-primary hover:bg-muted"
                   >
                     {l.label}
                   </a>

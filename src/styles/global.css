@@ -18,6 +18,8 @@
   html {
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
+    /* Wide screens: past 1600px the whole rem-sized page grows with the viewport, up to 1.25x at 2000px. */
+    font-size: clamp(100%, 1vw, 125%);
   }
   body {
     background: var(--color-background-body);

@@ -37,6 +37,14 @@ The theme's base text size is **16px** (`text-size larger`). Astryx's own defaul
 
 Titles stand out by **size and weight only** (700, `tracking-tight` on big ones). Tailwind's reset clears Astryx's own heading styles, so every heading sets its size and weight with classes.
 
+## Wide screens
+
+The root font size is `clamp(100%, 1vw, 125%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem (the theme's text sizes, Tailwind's spacing and widths) grows with the window, up to 1.25× at 2000px. So set new widths in rem, not px, or they won't scale with the rest of the page.
+
+Why 1.25×: 2× looked too zoomed in on a 32″ 4K screen. 1.25× keeps text close to normal size; the trade-off is wider side margins on very wide screens.
+
+Known limit: browser zoom (Cmd +) shrinks the window the page sees, so past 1600px the scaling backs off a little as you zoom. Zooming to 200% on a 3840px screen gives text about 1.9× its normal size, not 2×.
+
 ## Weights and italics
 
 - **400** body, **700** titles, headings and `<strong>`.
