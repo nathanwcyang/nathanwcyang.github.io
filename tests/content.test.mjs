@@ -1,7 +1,7 @@
 // Checks the built site (dist/): what a visitor or crawler receives. Run with: pnpm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { light as ayu } from "ayu";
 
 /** Built HTML for a site path, e.g. "/" or "/cv". */
@@ -133,7 +133,10 @@ test("project page: screenshot, caption and write-up", () => {
   assert.ok(flat(fig).includes("RxCounsel's input screen: the pharmacist enters patient details and the new drug, then clicks Generate."), "caption");
   assert.ok(h.indexOf("</h1>") < h.indexOf("<figure") && h.indexOf("<figure") < h.indexOf("The problem"), "figure between title and write-up");
   assert.ok(flat(h).includes("7–12 complex counselling sessions"), "write-up text");
-  assert.match(h, /property="og:image" content="[^"]*rxcounsel-input-screen/, "og:image");
+  const og = h.match(/property="og:image" content="[^"]*(\/_astro\/rxcounsel-input-screen[^"]*\.jpg)"/);
+  assert.ok(og, "og:image is a JPG of the screenshot");
+  assert.ok(statSync(new URL(`../dist${og[1]}`, import.meta.url)).size < 300_000, "og:image under 300 KB");
+  assert.match(h, /property="og:type" content="article"/);
 });
 
 test("old URLs redirect", () => {
