@@ -10,29 +10,33 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "astro build && node --test tests/*.test.mjs"
+    "test": "astro build && node --test tests/*.test.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.6",
     "@astrojs/react": "^7.1.9",
     "@astrojs/sitemap": "3.7.6",
+    "@astryxdesign/core": "0.7.17",
+    "@astryxdesign/theme-neutral": "0.7.17",
     "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
-    "@radix-ui/react-slot": "^1.5.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "@stylexjs/stylex": "^0.19.2",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.13",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "motion": "^14.14.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "sharp": "^0.32.6",
-    "tailwind-merge": "^3.7.1",
     "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@astryxdesign/cli": "0.7.17",
     "@tailwindcss/typography": "^0.5.20",
-    "@types/react": "^18.3.32",
-    "@types/react-dom": "^18.3.7"
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "ayu": "9.1.0",
+    "typescript": "^6.0.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

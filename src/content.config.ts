@@ -27,6 +27,25 @@ const projectCollection = defineCollection({
     schema: projectSchema,
 });
 
+// The CV: one file, src/content/cv.md, validated so a typo in a field name fails the build.
+const cvEntry = z.object({ title: z.string(), org: z.string(), dates: z.string() });
+const cvCollection = defineCollection({
+    loader: glob({ pattern: "cv.md", base: "./src/content" }),
+    schema: z.object({
+        experience: z.array(cvEntry.extend({
+            location: z.string(),
+            type: z.string(),
+            bullets: z.array(z.string()).min(1),
+            // Inline markdown links allowed: [text](/url)
+            achievement: z.string().optional(),
+        })),
+        education: z.array(cvEntry),
+        certifications: z.array(z.string()),
+        skills: z.array(z.object({ group: z.string(), items: z.array(z.string()).min(1) })),
+    }),
+});
+
 export const collections = {
     'projects': projectCollection,
+    'cv': cvCollection,
 }

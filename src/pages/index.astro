@@ -1,73 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import Section from "../components/home/Section.astro";
+import Hero from "../components/home/Hero.astro";
+import FeaturedProjects from "../components/home/FeaturedProjects.astro";
 import CvSections from "../components/cv/CvSections.astro";
-import { getSortedProjects } from "../lib/projects";
-import ContactButtons from "../components/ContactButtons.astro";
-import Location from "../components/Location.astro";
-import { SITE_EMAIL } from "../config";
-import { Image } from "astro:assets";
-import headshot from "../assets/nathan-yang.jpg";
-
-// Featured projects first, then newest. Add a file in src/content/projects/ and it shows up here.
-const featured_projects = (await getSortedProjects()).slice(0, 3);
 ---
 
-<BaseLayout sideBarActiveItemID="home">
-  <!-- Layout adapted from HyperUI's Portfolio "About" section (MIT): photo column + text column, stacked on phones. -->
-  <section data-home class="mb-12 mt-5 grid gap-8 md:grid-cols-[minmax(0,2fr)_3fr] md:items-start md:gap-10 bg-card border border-transparent shadow-card rounded-2xl p-5 md:p-8">
-    <Image
-      src={headshot}
-      alt="Nathan Yang in his University of Waterloo graduation gown"
-      widths={[320, 640, 960]}
-      sizes="(min-width: 768px) 30vw, 10rem"
-      format="webp"
-      loading="eager"
-      class="w-40 md:w-full aspect-square object-cover object-[center_25%] rounded-xl outline outline-1 -outline-offset-1 outline-black/10"
-    />
-    <div>
-    <h1 class="type-display">Nathan Yang</h1>
-    <p class="type-lede text-muted-foreground pt-3 pb-1">Doctor of Pharmacy Student, University of Waterloo · Class of 2027</p>
-    <div class="py-2">
-      <p class="text-lg">
-        I'm a third-year PharmD student with a background in specialty, community and hospital pharmacy. Before
-        pharmacy, I spent time in fintech. I'm always happy to talk about AI, vibe coding and design!
-      </p>
-      <p class="text-lg mt-3">
-        When I'm not wearing my white coat, I nerd out on music production, photography and what makes an image look
-        great on a cinema screen :)
-      </p>
-    </div>
-    <p class="type-meta flex flex-wrap items-center gap-x-5 gap-y-1 mt-4">
-      <span class="inline-flex items-center gap-1">
-        <Location />
-      </span>
-      <span class="inline-flex items-center gap-1">
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.51l-8 6.22-8-6.22V6h16zM4 18V9.04l7.39 5.75a1 1 0 0 0 1.22 0L20 9.04V18H4z"/></svg>
-        <a class="no-underline hover:underline" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
-      </span>
-    </p>
-    <ContactButtons />
-    </div>
-  </section>
-
-  <Section id="projects" title="Featured Projects">
-    <div class="flex flex-col gap-6 mb-4">
-    {
-      featured_projects.map((project) => (
-        <ProjectCard
-            title={project.data.title}
-            img={project.data.heroImage}
-            desc={project.data.description}
-            url={"/projects/" + project.id}
-            badge={project.data.badge}
-          />
-      ))
-    }
-    </div>
-    <a class="no-underline hover:underline type-meta" href="/projects">All projects →</a>
-  </Section>
-
+<BaseLayout>
+  <Hero />
+  <FeaturedProjects />
   <CvSections />
 </BaseLayout>

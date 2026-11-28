@@ -1,12 +1,9 @@
 ---
-// One home-page section: title on the left and content on the right on wide screens, stacked on phones.
-// On phones, scroll-padding-top in global.css keeps the title clear of the sticky header when a sidebar link jumps here.
+// One home-page section: a heading, then its content. Fades up gently unless reduced motion is on.
 const { id, title } = Astro.props;
 ---
 
-<section id={id} aria-labelledby={`${id}-title`} class="lg:scroll-mt-6 mb-12 lg:grid lg:grid-cols-[11rem_1fr] lg:gap-10">
-  <h2 id={`${id}-title`} class="type-title mb-5">{title}</h2>
-  <div>
-    <slot />
-  </div>
+<section id={id} aria-labelledby={`${id}-title`} data-fade class="py-12 border-t border-border first:border-t-0">
+  <h2 id={`${id}-title`} class="mb-8 text-3xl font-bold tracking-tight">{title}</h2>
+  <slot />
 </section>

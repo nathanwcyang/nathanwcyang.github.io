@@ -1,99 +1,41 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import SideBar from "../components/SideBar.astro";
-import { ClientRouter } from "astro:transitions";
-
+import { TopBar } from "../components/ui/TopBar";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 
-const {
-  image,
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
-  includeSidebar = true,
-  sideBarActiveItemID,
-  ogType,
-} = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogType?: string;
+  /** href of the top-bar link to mark as the current page */
+  current?: string;
+}
+const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, ogType, current } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en-CA">
+<html lang="en-CA" data-theme="light">
   <head>
     <BaseHead title={title} description={description} image={image} ogType={ogType} />
-    <ClientRouter />
   </head>
-  <body>
-    <div class="grid bg-background lg:grid-cols-[auto_1fr]">
-      <input id="my-drawer" type="checkbox" class="menu-input" aria-label="Open menu" />
-      <div class="menu-page min-w-0 row-start-1 bg-background lg:col-start-2">
-        <Header title={SITE_TITLE} />
-        <div class="md:flex md:justify-center">
-          <main class="w-full p-6 pt-10 lg:max-w-[56.25rem] xl:max-w-[62.5rem] max-w-[100vw]">
-            <slot />
-          </main>
-        </div>
-        <Footer />
+  <body data-astryx-theme="ayu">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-2">Skip to content</a>
+    <header class="sticky top-0 z-40 border-b border-border bg-body/90 backdrop-blur">
+      <div class="mx-auto max-w-5xl px-2 sm:px-4">
+        <TopBar current={current} />
       </div>
-      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
-    </div>
+    </header>
+    <main id="main" class="mx-auto max-w-5xl px-6 pb-16">
+      <slot />
+    </main>
+    <Footer />
     <script>
-      // Mobile menu: hide the closed menu, and the page behind the open menu, from keyboard and screen readers; close it with Escape.
-      let controller: AbortController | undefined;
-      function setupMenu() {
-        // Drop the previous run's document and media-query listeners so they don't pile up across page changes
-        controller?.abort();
-        controller = new AbortController();
-        const { signal } = controller;
-        const toggle = document.getElementById("my-drawer") as HTMLInputElement | null;
-        const menu = document.getElementById("site-menu");
-        const page = document.querySelector(".menu-page");
-        if (!toggle || !menu) return;
-        toggle.setAttribute("aria-controls", "site-menu");
-        const wide = window.matchMedia("(min-width: 1024px)");
-        const sync = () => {
-          const hidden = !wide.matches && !toggle.checked;
-          menu.toggleAttribute("inert", hidden);
-          page?.toggleAttribute("inert", !wide.matches && toggle.checked);
-          toggle.setAttribute("aria-label", toggle.checked ? "Close menu" : "Open menu");
-        };
-        // Phone menu: close it when a link is tapped, so the page scrolls into view
-        menu.querySelectorAll("a").forEach((a) =>
-          a.addEventListener(
-            "click",
-            () => {
-              if (!wide.matches && toggle.checked) {
-                toggle.checked = false;
-                sync();
-              }
-            },
-            { signal }
-          )
-        );
-        toggle.addEventListener(
-          "change",
-          () => {
-            sync();
-            // When the menu opens, move keyboard focus to its first link
-            if (toggle.checked && !wide.matches) menu.querySelector("a")?.focus();
-          },
-          { signal }
-        );
-        wide.addEventListener("change", sync, { signal });
-        document.addEventListener(
-          "keydown",
-          (e) => {
-            if (e.key === "Escape" && toggle.checked) {
-              toggle.checked = false;
-              sync();
-              toggle.focus();
-            }
-          },
-          { signal }
-        );
-        sync();
-      }
-      document.addEventListener("astro:page-load", setupMenu);
+      // Phone menu: close the popover when a link in it is tapped, so the page scrolls into view
+      document.getElementById("site-menu")?.addEventListener("click", (e) => {
+        if ((e.target as Element).closest("a")) (e.currentTarget as HTMLElement).hidePopover();
+      });
     </script>
   </body>
 </html>
