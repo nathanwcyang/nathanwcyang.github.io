@@ -30,7 +30,7 @@ Never put Nathan's phone number or home address on the site.
 - The home page is one long scroll: Hero (`#hero`, photo, location, Email and LinkedIn; no GitHub), Projects (`#projects`), Experience (`#experience`), Education with Certifications (`#education`), Skills (`#skills`). Nothing may have `id="top"`: `/#top` relies on the browser scrolling to the page top when no element has that id.
 - The top bar (`src/components/ui/TopBar.tsx`) has no name on the left: one frosted pill on the right links to `/#experience`, `/#education`, `/#skills`, `/projects` and LinkedIn. On the home page, scrolling past 24px shrinks it to `/projects` + LinkedIn (styles at the end of `src/styles/global.css`, script in `BaseLayout.astro`; the prototype and its motion plans are on the `prototype/morphing-navbar` branch). On phones the links move into a native popover menu.
 - `/cv` redirects to `/#experience` and `/contact` to `/` (in `astro.config.mjs`).
-- The blog was removed. To publish the first post, restore it from the `v1` git tag (`src/pages/blog`, `PostLayout`, `HorizontalCard`, `rss.xml.js` and the blog collection) add a Blog link to `NAV_LINKS` in the top bar, and re-add `@astrojs/mdx` and `mdx()` in `astro.config.mjs` if the posts are `.mdx`.
+- The blog was removed. To publish the first post, restore it from the `v1` git tag (`src/pages/blog`, `PostLayout`, `HorizontalCard`, `rss.xml.js` and the blog collection), add a Blog link to `NAV_LINKS` in the top bar, and re-add `@astrojs/mdx` and `mdx()` in `astro.config.mjs` if the posts are `.mdx`.
 - The design before this one (sidebar, Flexoki, avatar orb) is kept under the `v2` git tag.
 
 ## Design
