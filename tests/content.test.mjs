@@ -218,5 +218,27 @@ test("fade-up only runs when reduced motion is off", () => {
     const before = c.lastIndexOf("@media", m.index);
     assert.ok(c.slice(before, before + 50).includes("prefers-reduced-motion:no-preference"), "fade-up used outside a no-preference block");
   }
-  assert.ok(!/clamp\(100%,1vw,125%\)/.test(c), "wide-screen scaling still there");
+});
+
+// Issues #57–#61, from the interface review.
+test("#57 root font scales past 1600px, never below the visitor's base", () => {
+  assert.match(css(), /html\{[^}]*font-size:clamp\(100%,1vw,125%\)/);
+});
+test("#58 project write-up is capped at a readable measure", () => {
+  const article = html("/projects/rxcounsel").match(/<article[^>]*>/)[0];
+  // 32rem: Atkinson's wide zero makes 65ch about 92 characters, so the cap is in rem (~72 characters at 16px).
+  assert.match(article, /\bmax-w-lg\b/);
+  assert.ok(!article.includes("max-w-[46rem]"), "old 46rem cap still set");
+});
+test("#59 phone menu keeps the browser's focus ring, not the 2.2:1 accent", () => {
+  assert.ok(!html("/").includes("outline-[var(--color-accent)]"), "menu still draws its ring in --color-accent");
+});
+test("#60 link arrows are hidden from screen readers", () => {
+  assert.match(html("/"), /View all projects <span aria-hidden="true">→<\/span>/);
+  assert.equal((html("/projects/rxcounsel").match(/<span aria-hidden="true">←<\/span> All projects/g) || []).length, 2);
+});
+test("#61 project screenshot has a neutral outline, not the tinted border", () => {
+  const img = html("/projects/rxcounsel").match(/<figure[\s\S]*?<img[^>]*>/)[0];
+  assert.match(img, /outline-black\/10/);
+  assert.ok(!/<img[^>]*border-border/.test(img), "tinted border still on the image");
 });

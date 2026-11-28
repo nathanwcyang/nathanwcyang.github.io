@@ -17,8 +17,8 @@ const { title, description, heroImage, heroAlt, heroCaption, category, date } = 
 ---
 
 <BaseLayout title={title} description={description} image={heroImage?.src} current="/projects">
-  <article data-fade class="prose prose-lg mx-auto max-w-[46rem] py-16 prose-img:mx-auto">
-    <a href="/projects" class="not-prose text-sm text-secondary hover:underline">← All projects</a>
+  <article data-fade class="prose prose-lg mx-auto max-w-lg py-16 prose-img:mx-auto">
+    <a href="/projects" class="not-prose text-sm text-secondary hover:underline"><span aria-hidden="true">←</span> All projects</a>
     <h1 class="mt-4 mb-3!">{title}</h1>
     <div class="not-prose flex items-center gap-3 text-sm text-secondary">
       <Tag label={CATEGORY[category].label} />
@@ -26,12 +26,12 @@ const { title, description, heroImage, heroAlt, heroCaption, category, date } = 
     </div>
     {heroImage && (
       <figure class="not-prose my-8">
-        <Image src={heroImage} alt={heroAlt!} width={750} densities={[1, 2]} format="webp" loading="eager" class="h-auto w-full rounded-lg border border-border" />
+        <Image src={heroImage} alt={heroAlt!} width={750} densities={[1, 2]} format="webp" loading="eager" class="h-auto w-full rounded-lg outline outline-1 -outline-offset-1 outline-black/10" />
         {heroCaption && <figcaption class="mt-2 text-sm text-secondary">{heroCaption}</figcaption>}
       </figure>
     )}
     <Content />
     <hr />
-    <a href="/projects" class="no-underline">← All projects</a>
+    <a href="/projects" class="no-underline"><span aria-hidden="true">←</span> All projects</a>
   </article>
 </BaseLayout>
