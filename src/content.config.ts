@@ -23,7 +23,7 @@ const projectSchema = ({ image }: { image: ImageFn }) => z.object({
 export type ProjectSchema = z.infer<ReturnType<typeof projectSchema>>;
 
 const projectCollection = defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
     schema: projectSchema,
 });
 
