@@ -5,12 +5,9 @@ import Section from "../home/Section.astro";
 import TimeLineElement from "./TimeLine.astro";
 import { Tag } from "../ui/Tag";
 import { getEntry } from "astro:content";
+import { inlineMd } from "../../lib/inline-md";
 
 const cv = (await getEntry("cv", "cv"))!.data;
-
-// shortcut: only handles [text](url) links; switch to a markdown renderer if cv.md needs more.
-const inlineMd = (s: string) =>
-  s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="font-semibold text-accent underline">$1</a>');
 ---
 
 <Section id="experience" title="Experience">
