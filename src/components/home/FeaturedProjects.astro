@@ -1,0 +1,30 @@
+---
+// Three project cards in a row (the template's "Expertise" grid). Featured first, then newest.
+import Section from "./Section.astro";
+import { Card } from "../ui/Card";
+import { Icon } from "../ui/Icon";
+import { Tag } from "../ui/Tag";
+import { getSortedProjects, CATEGORY } from "../../lib/projects";
+
+const projects = (await getSortedProjects()).slice(0, 3);
+---
+
+<Section id="projects" title="Projects">
+  <ul class="grid gap-6 md:grid-cols-3">
+    {projects.map((p) => (
+      <li>
+        <Card>
+          <div class="flex h-full flex-col gap-3">
+            <Icon icon={CATEGORY[p.data.category].icon} size="lg" color="accent" />
+            <h3 class="text-xl font-bold">
+              <a href={`/projects/${p.id}`} class="hover:underline">{p.data.title}</a>
+            </h3>
+            <p class="grow text-secondary">{p.data.description}</p>
+            <div><Tag label={CATEGORY[p.data.category].label} /></div>
+          </div>
+        </Card>
+      </li>
+    ))}
+  </ul>
+  <a href="/projects" class="mt-8 inline-flex items-center gap-1 font-semibold text-accent hover:underline">View all projects →</a>
+</Section>

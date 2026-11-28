@@ -4,62 +4,64 @@
 
 **One font for the whole site: Atkinson Hyperlegible Next** (variable, weights 200–800). It was built by the Braille Institute for legibility: I, l and 1 look different, and so do 0 and O. Zeros have a slash on purpose.
 
-It's self-hosted through Fontsource (SIL Open Font License), so no requests go to Google. Only the Latin letters are downloaded.
+It's self-hosted through Fontsource (SIL Open Font License), so no requests go to Google. Only the Latin letters are downloaded. The Astryx theme names it as its font (`"Atkinson Hyperlegible Next Variable"`), so Astryx components use it too.
 
 Decided against: a serif for titles (two fonts felt busy), Geist ("AI" reads as "Al"), Lexend (too wide, more wrapping on phones).
 
-## Text styles
+## Where styles come from
 
-Titles stand out by **size and weight only**.
+The site uses [Astryx](https://github.com/facebook/astryx) components with a custom theme called **ayu** (ayu light colours on Astryx's neutral theme). The theme lives in `themes/ayu/` and is changed only with the theme editor:
 
-**Every text size is Tailwind's default + 1pt** (set in the `@theme` block of `src/styles/global.css`). The pixel sizes in the table below are the Tailwind defaults; add 1.33px to each. Project write-ups get the same +1pt in `src/styles/global.css`. Use these classes (defined in `src/styles/global.css`) instead of setting sizes and weights by hand.
+```bash
+pnpm exec astryx experimental theme editor set ayu <thing> <value>
+```
 
-| **Class** | **Used for** | **Weight** | **Size (phone → desktop)** |
-|---|---|---|---|
-| `type-display` | Home hero ("I'm Nathan"), project/post page titles | 700, tight spacing | 36 → 48px |
-| `type-title` | Section titles ("Experience", "Featured Projects") | 700, tight spacing | 24 → 30px |
-| `type-lede` | Hero subtitle | 500 | 18 → 20px |
-| `type-heading` | Card titles, write-up `h2` ("The problem") | 700 | 20px |
-| `type-subheading` | CV job titles, write-up `h3` | 600 | 16px |
-| Body text | Paragraphs, bullets | 400 | 16px, relaxed line height |
-| `type-meta` | Dates, captions, CV detail lines | 400 | 14px, 70% opacity |
-| `type-label` | Small section labels ("Key achievements") | 600, uppercase, wide spacing | 12px, 70% opacity |
-| Badge | Project tag next to a title | 400 | 14px, cream on black; see `src/components/ui/badge.tsx` |
-| Divider | Line under project titles | n/a | 2px line, 10% black; see `src/pages/projects/[slug].astro` |
-| Menu, buttons | Navigation | 600 | see `src/components/ui/button.tsx` |
+Each change rebuilds the app copy in `src/themes/ayu/`, which `src/styles/global.css` imports. Never edit `src/themes/ayu/` by hand.
 
-## Wide screens
+Tailwind sits alongside Astryx for layout. Astryx's Tailwind bridge (`@astryxdesign/core/tailwind-theme.css`) turns theme tokens into utilities, so `text-primary`, `text-secondary`, `bg-card` and `text-sm` all follow the theme.
 
-The root font size is `clamp(100%, 1vw, 125%)` (in `src/styles/global.css`). Below 1600px wide it is the visitor's own base size. Past 1600px everything sized in rem grows with the window, up to 1.25× at 2000px. So set new widths in rem, not px, or they won't scale with the rest of the page.
+**Wrapper rule:** only the files in `src/components/ui/` import Astryx. Pages and sections use those wrappers (`Button`, `Card`, `Tag`, `Icon`, `TopBar`). To swap component libraries, rewrite those files.
 
-Why 1.25×: 2× (tried first) looked too zoomed in on a 32″ 4K screen. 1.25× keeps text close to normal size; the trade-off is wider side margins on very wide screens (about 1,100px each side at 3840px).
+## Text sizes
 
-Known limit: on a screen wider than 1600px, browser zoom (Cmd +) shrinks the window the page sees, so the scaling backs off a little as you zoom. With a 1.25× cap, zoom loses at most that 1.25×: zooming to 200% on a 3840px screen gives text about 1.9× its normal size, not 2×. The main column is 56.25rem (900px), and 62.5rem (1000px) from 1280px up.
+The theme's base text size is **16px** (`text-size larger`). Astryx's own default is 14px, which suits dense apps more than a CV. Tailwind's size utilities follow the theme's scale:
+
+| **Class** | **Size** | **Used for** |
+|---|---|---|
+| `text-sm` | 13px | Footer, project page date and caption |
+| `text-base` / body | 16px | Paragraphs, bullets, CV detail lines |
+| `text-lg` | 19px | CV job titles, skill groups, hero subtitle |
+| `text-xl` | 23px | Project card titles |
+| `text-3xl` | 33px | Section titles ("Experience", "Projects") |
+| `text-4xl` → `text-6xl` | 40px → hero size | Page titles and the hero name |
+
+Titles stand out by **size and weight only** (700, `tracking-tight` on big ones). Tailwind's reset clears Astryx's own heading styles, so every heading sets its size and weight with classes.
 
 ## Weights and italics
 
-- **400** body, **500** lede, **600** subheadings and labels, **700** titles, headings and `<strong>`.
-- **Italic** only for emphasis inside body text and for pull quotes (`>` blockquotes) in write-ups. No italic titles.
+- **400** body, **700** titles, headings and `<strong>`.
+- **Italic** only for the CV's job type (Co-op, Full-time), emphasis in body text, and pull quotes in write-ups.
 - **Never:** a second font, or weights below 400 for text people need to read.
 
 ## Colour
 
-Colours are shadcn CSS variables in `src/styles/global.css` holding **Flexoki light** values (https://stephango.com/flexoki).
+Colours are [ayu light](https://github.com/ayu-theme/ayu-colors), set as Astryx theme tokens:
 
-| **Role** | **Class** | **Flexoki colour** | **Hex** |
-|---|---|---|---|
-| Page background | `bg-background` | paper | #FFFCF0 |
-| Sidebar / card background | `bg-muted` | base-50 | #F2F0E5 |
-| Borders / active menu | `border-border` | base-100 | #E6E4D9 |
-| Text and titles | `text-foreground` | black | #100F0F |
-| Accent (links, avatar) | `text-primary` | blue-600 | #205EA6 |
+| **Role** | **Token** | **Tailwind class** | **Hex** | **Contrast on page** |
+|---|---|---|---|---|
+| Page background | `--color-background-body` | `bg-body` | #F8F9FA | n/a |
+| Cards, top-bar menu | `--color-background-card` | `bg-card` | #FFFFFF | n/a |
+| Text and titles | `--color-text-primary` | `text-primary` | #2F3337 | 12.1:1 |
+| Secondary text (dates, descriptions) | `--color-text-secondary` | `text-secondary` | #5C6166 (ayu's text colour) | 5.9:1 |
+| Links | `--color-text-accent` | `text-accent` | #A85100 | 5.2:1 |
+| Accent (timeline dots, photo ring, primary button) | `--color-accent` | `bg-accent-bg` | #F29718 (ayu's accent) | decoration only |
 
-- Titles stay near-black. Blue is reserved for links, the avatar and small accents, so it stands out.
-- Raised cards (the home intro, project cards) use `bg-card shadow-card` with `border border-transparent` (so forced-colors mode still draws an edge), 16px corners (`rounded-2xl`), and 12px corners (`rounded-xl`) on images inside. Hover deepens to `shadow-card-hover`.
-- Use shadcn colour names in code (`text-primary`, `bg-muted`), never raw hex values.
+- Body text is a darkened ayu grey (#2F3337) instead of ayu's own #5C6166, so it reads as near-black.
+- Ayu's orange (#F29718) is only 2.2:1 on the page, so it never colours text. Links use the darker #A85100.
+- A test (`tests/content.test.mjs`) checks that every text token reaches 4.5:1.
+- The site is light-only; there is no dark mode.
+- The favicon (`public/favicon.svg`) has its colours written in. Update it by hand if the accent changes.
 
-## Changing the colours
+## Motion
 
-Edit the RGB channel values in the `:root` block of `src/styles/global.css`. The site is light-only; there is no dark mode.
-
-The avatar and favicon (`public/avatar-ny.svg`, `public/favicon.svg`) have their colours written in. Update those two files by hand if you change the accent colour.
+Sections fade up over 300ms when the page loads (`[data-fade]` in `src/styles/global.css`). The rule only exists inside `@media (prefers-reduced-motion: no-preference)`, so visitors who have reduced motion turned on see no movement.

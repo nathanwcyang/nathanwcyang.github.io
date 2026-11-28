@@ -1,37 +1,22 @@
 ---
+// Every project, newest first: year, linked name, one-line description and category tag.
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import { getSortedProjects } from "../lib/projects";
+import { Icon } from "../components/ui/Icon";
+import { Tag } from "../components/ui/Tag";
+import { getCollection } from "astro:content";
+import { CATEGORY } from "../lib/projects";
 
-const projects = await getSortedProjects();
-const sections = [
-  { category: "pharmacy", heading: "Pharmacy & Health Tech", empty: "More coming soon." },
-  { category: "creative", heading: "Creative", empty: "Music, film and photography projects coming soon." },
-];
+const projects = (await getCollection("projects")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Projects" sideBarActiveItemID="projects">
-  <h1 class="sr-only">Projects</h1>
-  {
-    sections.map((section, i) => {
-      const items = projects.filter((p) => p.data.category === section.category);
-      return (
-        <>
-          <h2 class={`type-title w-full mb-5 ${i > 0 ? "mt-10" : ""}`}>{section.heading}</h2>
-          {items.length === 0 && <p class="opacity-75">{section.empty}</p>}
-          <div class="flex flex-col gap-6">
-          {items.map((project) => (
-            <ProjectCard
-            title={project.data.title}
-            img={project.data.heroImage}
-            desc={project.data.description}
-            url={"/projects/" + project.id}
-            badge={project.data.badge}
-          />
-          ))}
-          </div>
-        </>
-      );
-    })
-  }
+<BaseLayout title="Projects" current="/projects">
+  <section data-fade class="py-16">
+    <h1 class="text-4xl font-bold tracking-tight">Projects</h1>
+    <p class="mt-2 text-secondary">Pharmacy tools, and the creative work I do outside the white coat.</p>
+    <ul class="mt-10 divide-y divide-border">
+      {projects.map((p) => (
+        <li data-project={p.id} class="grid gap-x-6 gap-y-1 py-5 sm:grid-cols-[4rem_1fr]"><span class="text-secondary tabular-nums">{p.data.date.getUTCFullYear()}</span><div><h2 class="inline-flex items-center gap-2 text-lg font-bold"><Icon icon={CATEGORY[p.data.category].icon} size="sm" color="accent" /><a href={`/projects/${p.id}`} class="hover:underline">{p.data.title}</a></h2><p class="text-secondary">{p.data.description}</p><div class="mt-2"><Tag label={CATEGORY[p.data.category].label} /></div></div></li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>

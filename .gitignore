@@ -20,3 +20,6 @@ pnpm-debug.log*
 
 # Astro
 .astro/
+# Astryx theme editor preview (regenerated on every theme change)
+themes/*/preview.html
+themes/*/*.png

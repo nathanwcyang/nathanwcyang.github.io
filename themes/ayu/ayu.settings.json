@@ -1,0 +1,72 @@
+{
+  "name": "ayu",
+  "like": "neutral",
+  "mode": "light-only",
+  "settings": [
+    {
+      "thing": "accent",
+      "value": "#f29718",
+      "source": "dial"
+    },
+    {
+      "thing": "--color-background-body",
+      "value": "#f8f9fa",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-background-surface",
+      "value": "#fcfcfc",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-background-card",
+      "value": "#ffffff",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-background-muted",
+      "value": "#ebeef0",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-text-primary",
+      "value": "#2f3337",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-text-secondary",
+      "value": "#5c6166",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-text-accent",
+      "value": "#a85100",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-on-accent",
+      "value": "#2f3337",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "font",
+      "value": "\"Atkinson Hyperlegible Next Variable\", system-ui, sans-serif",
+      "source": "dial"
+    },
+    {
+      "thing": "text-size",
+      "value": "larger",
+      "source": "dial"
+    }
+  ],
+  "lifted": [],
+  "palette": "dce7a456a56b3d2fb061610429cd352978b93f7e988e9103a48cb7f24048a74c"
+}

@@ -1,50 +1,42 @@
 ---
-// The CV, shown on the home page below Featured Projects.
-// Order: Experience, Education, Certifications, Skills. Text lives in src/content/cv.md.
+// The CV, shown on the home page below Projects: Experience, Education (with Certifications), Skills.
+// Text lives in src/content/cv.md.
 import Section from "../home/Section.astro";
 import TimeLineElement from "./TimeLine.astro";
+import { Tag } from "../ui/Tag";
 import { frontmatter as cv } from "../../content/cv.md";
 
 // shortcut: only handles [text](url) links; switch to a markdown renderer if cv.md needs more.
 const inlineMd = (s: string) =>
-  s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="font-semibold text-primary underline">$1</a>');
+  s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="font-semibold text-accent underline">$1</a>');
 ---
 
 <Section id="experience" title="Experience">
-  <div class="time-line-container">
-    {cv.experience.map((job) => (
-      <TimeLineElement title={job.title} org={job.org} type={job.type} location={job.location} dates={job.dates}>
-        <ul class="list-disc ml-5 space-y-1">
-          {job.bullets.map((b: string) => <li>{b}</li>)}
-        </ul>
-        {job.achievement && <p slot="achievements" set:html={inlineMd(job.achievement)} />}
-      </TimeLineElement>
-    ))}
-  </div>
+  {cv.experience.map((job) => (
+    <TimeLineElement title={job.title} org={job.org} type={job.type} location={job.location} dates={job.dates}>
+      <ul class="ml-5 list-disc space-y-1">
+        {job.bullets.map((b: string) => <li>{b}</li>)}
+      </ul>
+      {job.achievement && <p slot="achievements" set:html={inlineMd(job.achievement)} />}
+    </TimeLineElement>
+  ))}
 </Section>
 
 <Section id="education" title="Education">
-  <div class="time-line-container grid gap-4">
-    {cv.education.map((e) => <TimeLineElement title={e.title} org={e.org} dates={e.dates} />)}
-  </div>
-</Section>
-
-<Section id="certifications" title="Certifications">
-  <ul class="list-disc ml-5 grid gap-2">
+  {cv.education.map((e) => <TimeLineElement title={e.title} org={e.org} dates={e.dates} />)}
+  <h3 class="mb-3 mt-2 text-lg font-bold">Certifications</h3>
+  <ul class="ml-5 list-disc space-y-1">
     {cv.certifications.map((c: string) => <li>{c}</li>)}
   </ul>
 </Section>
 
 <Section id="skills" title="Skills">
-  {/* Pills follow HyperUI's base badge, mapped to the site's colour tokens. */}
-  <div class="space-y-5">
+  <div class="space-y-6">
     {cv.skills.map(({ group, items }) => (
       <div>
-        <h3 class="type-subheading">{group}</h3>
-        <ul class="mt-2 flex flex-wrap gap-2">
-          {items.map((s: string) => (
-            <li class="rounded-full bg-muted px-2.5 py-0.5 text-sm whitespace-nowrap text-foreground">{s}</li>
-          ))}
+        <h3 class="text-lg font-bold">{group}</h3>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {items.map((s: string) => <li><Tag label={s} /></li>)}
         </ul>
       </div>
     ))}

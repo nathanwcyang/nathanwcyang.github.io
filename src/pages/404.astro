@@ -1,13 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "../components/ui/Button";
 ---
 
 <BaseLayout title="404: Not Found">
-  <div class="text-center">
-    <div class="text-9xl mb-4" aria-hidden="true">🏝</div>
-    <h1 class="text-9xl font-bold mb-2">404</h1>
-    <p class="text-2xl">The page you're looking for couldn't be found.</p>
-    <a class={buttonVariants({ className: "mt-9" })} href="/">Back to home</a>
-  </div>
+  <section class="py-24 text-center">
+    <h1 class="text-8xl font-bold">404</h1>
+    <p class="mt-2 text-xl text-secondary">The page you're looking for couldn't be found.</p>
+    <div class="mt-8"><Button variant="primary" label="Back to home" href="/" /></div>
+  </section>
 </BaseLayout>
