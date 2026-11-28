@@ -17,13 +17,12 @@ const projectSchema = ({ image }: { image: ImageFn }) => z.object({
     heroAlt: z.string().optional(),
     // Optional caption under the image on the project page
     heroCaption: z.string().optional(),
-    badge: z.string().optional(),
 }).refine((p) => !p.heroImage || p.heroAlt, { message: "heroAlt is required when heroImage is set", path: ["heroAlt"] });
 
 export type ProjectSchema = z.infer<ReturnType<typeof projectSchema>>;
 
 const projectCollection = defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+    loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
     schema: projectSchema,
 });
 
