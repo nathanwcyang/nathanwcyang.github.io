@@ -140,6 +140,13 @@ test("old URLs redirect", () => {
   assert.ok(html("/contact").includes('http-equiv="refresh"'), "/contact is not a redirect");
 });
 
+test("no <div> inside a <p> (the browser would end the paragraph early)", () => {
+  for (const page of PAGES) {
+    const bad = html(page).match(/<p\b[^>]*>(?:(?!<\/p>).)*?<div/s);
+    assert.equal(bad, null, `${page}: ${bad?.[0].slice(0, 80)}`);
+  }
+});
+
 test("no duplicate ids, and nothing has id=top", () => {
   for (const page of PAGES) {
     const h = html(page);

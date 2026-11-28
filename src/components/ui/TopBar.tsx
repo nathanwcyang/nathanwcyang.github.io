@@ -2,6 +2,7 @@
 // native popover (closes on Escape or a tap outside, with no JavaScript).
 import { TopNav, TopNavHeading, TopNavItem } from "@astryxdesign/core/TopNav";
 import { Icon } from "./Icon";
+import { Themed } from "./Themed";
 
 export const NAV_LINKS = [
   { label: "Experience", href: "/#experience" },
@@ -12,6 +13,7 @@ export const NAV_LINKS = [
 
 export function TopBar({ current }: { current?: string }) {
   return (
+    <Themed>
     <TopNav
       label="Main"
       heading={<TopNavHeading heading="Nathan Yang" headingHref="/#top" />}
@@ -51,5 +53,6 @@ export function TopBar({ current }: { current?: string }) {
         </>
       }
     />
+    </Themed>
   );
 }

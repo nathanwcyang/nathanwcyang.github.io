@@ -1,5 +1,6 @@
 /* Astryx + Tailwind, in the layer order `astryx docs styling-libraries/tailwind` asks for.
-   Colours, font and type sizes come from the ayu Astryx theme (src/themes/ayu, built from themes/ayu).
+   Colours, font and type sizes come from the ayu Astryx theme (src/themes/ayu, built from themes/ayu);
+   its stylesheet loads through src/astryx-themes.ts, which src/components/ui/Themed.tsx imports.
    See docs/design/typography.md. */
 @layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
 
@@ -7,7 +8,6 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import '@astryxdesign/core/reset.css';
 @import '@astryxdesign/core/astryx.css';
-@import '../themes/ayu/ayu.css';
 @import '@astryxdesign/core/tailwind-theme.css';
 @import 'tailwindcss/utilities.css' layer(utilities);
 

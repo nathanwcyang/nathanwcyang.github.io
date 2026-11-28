@@ -1,9 +1,8 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
+// global.css must be the first stylesheet: its @layer line sets the cascade order Astryx relies on.
+import '../styles/global.css';
 import '@fontsource-variable/atkinson-hyperlegible-next/wght.css';
 import '@fontsource-variable/atkinson-hyperlegible-next/wght-italic.css';
-import '../styles/global.css';
 
 export interface Props {
 	title: string;
