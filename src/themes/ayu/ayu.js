@@ -156,7 +156,7 @@ export const ayuTheme = {
     "--color-success-muted": "light-dark(#bce0bb, #90ca903D)",
     "--color-error-muted": "light-dark(#ffc4be, #ff98903D)",
     "--color-warning-muted": "light-dark(#fae19e, #e2b6233D)",
-    "--color-border": "light-dark(#00000014, #ffffff1A)",
+    "--color-border": "light-dark(#6b7d8f1f, #ffffff1A)",
     "--color-border-emphasized": "light-dark(#d4d4d4, #525252)",
     "--color-skeleton": "light-dark(#d1d1d1, #525252)",
     "--color-shadow": "light-dark(#0000001A, #0000004D)",

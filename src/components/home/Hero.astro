@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import headshot from "../../assets/nathan-yang.jpg";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
-import { EnvelopeSimple, LinkedinLogo, MapPin } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimpleIcon, LinkedinLogoIcon, MapPinIcon } from "@phosphor-icons/react/dist/ssr";
 import { SITE_EMAIL, SITE_LINKEDIN } from "../../config";
 ---
 
@@ -22,7 +22,7 @@ import { SITE_EMAIL, SITE_LINKEDIN } from "../../config";
     <h1 id="hero-title" class="text-4xl sm:text-6xl font-bold tracking-tight">Nathan Yang</h1>
     <p class="mt-2 text-lg sm:text-xl text-secondary">Doctor of Pharmacy Student, University of Waterloo · Class of 2027</p>
     <p class="mt-3 inline-flex items-center gap-1.5 text-secondary">
-      <Icon icon={MapPin} size="sm" />
+      <Icon icon={MapPinIcon} size="sm" />
       Based in Mississauga, Ontario
     </p>
     <div class="mt-5 max-w-prose space-y-3">
@@ -36,8 +36,8 @@ import { SITE_EMAIL, SITE_LINKEDIN } from "../../config";
       </p>
     </div>
     <div class="mt-6 flex flex-wrap gap-3">
-      <Button variant="primary" label="Email" href={`mailto:${SITE_EMAIL}`} icon={EnvelopeSimple} />
-      <Button label="LinkedIn" href={SITE_LINKEDIN} target="_blank" rel="noopener" icon={LinkedinLogo} />
+      <Button variant="primary" label="Email" href={`mailto:${SITE_EMAIL}`} icon={EnvelopeSimpleIcon} />
+      <Button label="LinkedIn" href={SITE_LINKEDIN} target="_blank" rel="noopener" icon={LinkedinLogoIcon} />
     </div>
   </div>
 </section>

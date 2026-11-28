@@ -2,6 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { light as ayu } from "ayu";
 
 /** Built HTML for a site path, e.g. "/" or "/cv". */
 function html(path) {
@@ -166,13 +167,17 @@ const lum = (hex) => {
   return 0.2126 * f(v >> 16) + 0.7152 * f((v >> 8) & 255) + 0.0722 * f(v & 255);
 };
 const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-/** The light value of an Astryx colour token as the ayu theme sets it (inside its @scope). */
+/** The light value of a colour token in the ayu theme's own token blocks
+ *  (`@scope([data-astryx-theme=ayu]) … { :scope { … } }`), not a component's override. */
 const token = (c, name) => {
-  const m = [...c.matchAll(new RegExp(`${name}:\\s*(?:light-dark\\()?\\s*(#[0-9a-fA-F]{6})`, "g"))]
-    .filter((m) => c.slice(c.lastIndexOf("@scope", m.index), m.index).match(/data-astryx-theme="?ayu"?\]/))
+  const blocks = [...c.matchAll(/@scope\s*\(\[data-astryx-theme="?ayu"?\]\)[^{]*\{\s*:scope\s*\{([^}]*)\}/g)].map((m) => m[1]);
+  const m = blocks
+    .map((b) => b.match(new RegExp(`${name}:\\s*(?:light-dark\\()?\\s*(#[0-9a-fA-F]{8}|#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\\b`)))
+    .filter(Boolean)
     .at(-1); // the theme layer comes last and wins
   assert.ok(m, `ayu token ${name} not found`);
-  return m[1].toLowerCase();
+  const hex = m[1].toLowerCase();
+  return hex.length === 4 ? "#" + [...hex.slice(1)].map((d) => d + d).join("") : hex; // #fff -> #ffffff
 };
 
 test("ayu text colours reach 4.5:1 on the page background", () => {
@@ -184,6 +189,25 @@ test("ayu text colours reach 4.5:1 on the page background", () => {
     assert.ok(r >= 4.5, `${t} is ${r.toFixed(2)}:1`);
   }
   assert.ok(!c.includes("255 252 240"), "Flexoki paper colour still in the CSS");
+});
+
+test("theme colours come from the ayu light palette", () => {
+  const c = css();
+  // Every token the site shows, mapped to ayu's own role for it (npm package `ayu`).
+  const map = {
+    "--color-background-body": ayu.surface.base,
+    "--color-background-surface": ayu.surface.lift,
+    "--color-background-card": ayu.surface.over,
+    "--color-background-muted": ayu.surface.sunk,
+    "--color-text-secondary": ayu.editor.fg,
+    "--color-accent": ayu.common.accent.tint,
+    "--color-border": ayu.ui.line,
+  };
+  for (const [t, colour] of Object.entries(map)) assert.equal(token(c, t), colour.hex().toLowerCase(), t);
+  // Deliberate departures, darker than ayu so text reads as near-black and links pass 4.5:1:
+  // --color-text-primary #2f3337 (ayu's text is #5c6166), --color-text-accent #a85100 (ayu's tint is 2.2:1),
+  // and --color-on-accent #2f3337 (ayu's accent.on #7e4b01 is only 3.2:1 on the orange button).
+  assert.ok(ratio(token(c, "--color-on-accent"), token(c, "--color-accent")) >= 4.5, "text on the accent button below 4.5:1");
 });
 
 test("fade-up only runs when reduced motion is off", () => {

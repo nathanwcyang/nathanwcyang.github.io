@@ -51,14 +51,17 @@ Colours are [ayu light](https://github.com/ayu-theme/ayu-colors), set as Astryx 
 |---|---|---|---|---|
 | Page background | `--color-background-body` | `bg-body` | #F8F9FA | n/a |
 | Cards, top-bar menu | `--color-background-card` | `bg-card` | #FFFFFF | n/a |
+| Borders and dividers | `--color-border` | `border-border` | #6B7D8F at 12% (ayu's line colour) | decoration only |
 | Text and titles | `--color-text-primary` | `text-primary` | #2F3337 | 12.1:1 |
 | Secondary text (dates, descriptions) | `--color-text-secondary` | `text-secondary` | #5C6166 (ayu's text colour) | 5.9:1 |
 | Links | `--color-text-accent` | `text-accent` | #A85100 | 5.2:1 |
 | Accent (timeline dots, photo ring, primary button) | `--color-accent` | `bg-accent-bg` | #F29718 (ayu's accent) | decoration only |
+| Text on the accent button | `--color-on-accent` | n/a | #2F3337 | 5.6:1 on the orange |
 
 - Body text is a darkened ayu grey (#2F3337) instead of ayu's own #5C6166, so it reads as near-black.
 - Ayu's orange (#F29718) is only 2.2:1 on the page, so it never colours text. Links use the darker #A85100.
-- A test (`tests/content.test.mjs`) checks that every text token reaches 4.5:1.
+- Ayu's own text-on-accent colour (#7E4B01) is only 3.2:1 on the orange, so the Email button uses #2F3337.
+- Tests (`tests/content.test.mjs`) check every theme colour against the `ayu` npm package, list the three deliberate departures above, and check that every text colour reaches 4.5:1.
 - The site is light-only; there is no dark mode.
 - The favicon (`public/favicon.svg`) has its colours written in. Update it by hand if the accent changes.
 

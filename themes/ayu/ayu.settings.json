@@ -65,6 +65,12 @@
       "thing": "text-size",
       "value": "larger",
       "source": "dial"
+    },
+    {
+      "thing": "--color-border",
+      "value": "#6b7d8f1f",
+      "source": "token",
+      "mode": "light"
     }
   ],
   "lifted": [],

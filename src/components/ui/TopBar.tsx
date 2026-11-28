@@ -24,6 +24,7 @@ export function TopBar({ current }: { current?: string }) {
               <TopNavItem key={l.href} label={l.label} href={l.href} isSelected={l.href === current} />
             ))}
           </span>
+          {/* A native <button>: Astryx's IconButton doesn't type popoverTarget, which the no-JS menu needs. */}
           <button
             type="button"
             popoverTarget="site-menu"

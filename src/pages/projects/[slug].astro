@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+// heroAlt is non-null whenever heroImage is set: the schema's refine enforces it.
 const { title, description, heroImage, heroAlt, heroCaption, category, date } = project.data;
 ---
 
@@ -25,7 +26,7 @@ const { title, description, heroImage, heroAlt, heroCaption, category, date } = 
     </div>
     {heroImage && (
       <figure class="not-prose my-8">
-        <Image src={heroImage} alt={heroAlt} width={750} densities={[1, 2]} format="webp" loading="eager" class="h-auto w-full rounded-lg border border-border" />
+        <Image src={heroImage} alt={heroAlt!} width={750} densities={[1, 2]} format="webp" loading="eager" class="h-auto w-full rounded-lg border border-border" />
         {heroCaption && <figcaption class="mt-2 text-sm text-secondary">{heroCaption}</figcaption>}
       </figure>
     )}

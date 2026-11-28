@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "astro build && node --test tests/*.test.mjs"
+    "test": "astro build && node --test tests/*.test.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.6",
@@ -29,10 +30,13 @@
     "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
     "@astryxdesign/cli": "0.7.17",
     "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^19.3.3",
-    "@types/react-dom": "^19.3.0"
+    "@types/react-dom": "^19.3.0",
+    "ayu": "9.1.0",
+    "typescript": "^6.0.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
